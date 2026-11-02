@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Molecular Evidence to Decision Support · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+</head>
+<!-- Mockup article page. Body text is condensed; every section, table and figure of the original is represented, and the full text is linked. -->
+<body data-page="blog.html">
+<main id="main">
+  <section class="post-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="blog.html">Blog</a><span>›</span><span>Treatment Planning</span></nav>
+      <span class="badge" style="margin-top:20px">Treatment Planning</span>
+      <h1>From Molecular Evidence to Multidisciplinary Decision Support</h1>
+      <p class="lead read">A synthetic third-line colorectal cancer case, worked end to end on Claude Science: from a molecular report to a patient's next step, with every step traceable.</p>
+      <div class="post-meta"><span class="who"><i>AiM</i>AiMOneHealth · Built on Claude Science</span><span>Jul 6, 2026</span><span>14 min read</span></div>
+      <figure class="post-cover glass"><img src="https://www.aimonehealth.com/images/blog/from-molecular-to-recommendation-hero.jpg" alt="AiMOneHealth precision-oncology platform infographic: one complex case, many minds, one patient-centric pathway."><figcaption><b>Figure 1.</b> The AiMOneHealth precision-oncology platform: one complex case, many minds, one patient-centric pathway.</figcaption></figure>
+    </div>
+  </section>
+
+  <section style="padding-top:12px">
+    <div class="wrap post-layout">
+      <aside class="post-toc glass strong" aria-label="In this article">
+        <h4>In this article</h4>
+        <a href="#glance" class="on">At a glance</a><a href="#case">The case</a><a href="#steps">How it was solved</a><a href="#answer">The answer</a><a href="#science">Hypotheses and evidence</a><a href="#critic">What was ruled out</a><a href="#care">From review to care</a><a href="#cycle">The full cycle</a><a href="#design">Why we built it this way</a><a href="#researchers">For researchers</a><a href="#summary">In summary</a>
+      </aside>
+
+      <article class="post-body">
+        <div class="note-box glass strong"><span class="ico sm" data-ico="shield"></span><p>Educational demonstration on a synthetic case (PX-SYN-CRC-LIVER-001). No real patient data. Not medical advice.</p></div>
+
+        <section id="glance">
+          <h2>At a glance</h2>
+          <div class="facts">
+            <div class="stat glass"><b>18 / 18</b><span>Record consistency checks passed</span></div>
+            <div class="stat glass"><b>139</b><span>Recruiting trials screened live</span></div>
+            <div class="stat glass"><b>4 / 4</b><span>Driver mutations scored deleterious</span></div>
+            <div class="stat glass"><b>7 / 7</b><span>Specialist reviewers concurred</span></div>
+            <div class="stat glass"><b>10</b><span>Stages from file ingest to action plan</span></div>
+          </div>
+          <p>The full cycle has ten stages, from reading the source files to a plan the patient can act on. Each stage leaves a machine-readable file behind. A specialist panel and the OncoNavigator roadmap connect the analysis to actual care. This post follows one hard case through all of it.</p>
+        </section>
+
+        <section id="case">
+          <h2>The case</h2>
+          <p>A synthetic 59-year-old has left-sided sigmoid colorectal cancer that has spread only to the liver. At diagnosis it was cT4a N2 M1a, with seven unresectable liver metastases on both lobes.</p>
+          <ul>
+            <li><b>Molecular profile:</b> microsatellite-stable (MSS/pMMR), TMB low (4.1), RAS and BRAF wild-type on tissue and a recent liquid biopsy, HER2 not amplified.</li>
+            <li><b>Germline:</b> UGT1A1 *1/*28, which affects irinotecan dosing. DPYD normal.</li>
+            <li><b>History:</b> first-line chemo plus anti-EGFR shrank the liver disease enough for surgery and a period with no evidence of disease. It came back in the liver; second line held briefly. CEA has now risen from 6 to 95. Still liver-only, ECOG 1.</li>
+          </ul>
+          <h3>The question the board had to answer</h3>
+          <p>Which third-line treatment should come next, and should the liver be treated locally again? The wild-type status opens one door, MSS closes the immunotherapy door, and the liver-only pattern raises a surgical question. Answering well means weighing molecular, oncology, surgical and drug-dosing views together.</p>
+        </section>
+
+        <section id="steps">
+          <h2>How the case was solved, step by step</h2>
+          <ul>
+            <li><b>Step 1 — Check the record first.</b> Five source files were compared with 18 explicit tests (allele fractions, UGT1A1 status, CEA story). All passed with no conflicts before any interpretation started.</li>
+            <li><b>Step 2 — Give every biomarker a verdict, including "no".</b> Immunotherapy alone: NOT INDICATED (MSS, low TMB). HER2, BRAF, NTRK and KRAS-G12C drugs: NOT APPLICABLE. Anti-EGFR rechallenge: SUPPORTED, because of earlier lasting benefit and wild-type status on liquid biopsy.</li>
+            <li><b>Step 3 — Match live trials and name the gate.</b> 139 recruiting trials were ranked by fit and access. Each got one gating criterion: surgical candidacy, second-line-only enrollment, Italy-only sites, or a mismatched progression pattern.</li>
+            <li><b>Step 4 — Check every citation live.</b> Each reference has a PubMed ID and DOI verified at query time. One ID pointed to an unrelated cystic-fibrosis paper and was swapped for the right trial.</li>
+            <li><b>Step 5 — Cross-check the drivers on GPU.</b> ESMC-600M on an NVIDIA RTX 5090 scored all four missense drivers as deleterious: FBXW7 R465C −13.8, SMAD4 R361H −8.0, TP53 R175H −5.75, PIK3CA E545K −3.44. This is research support, not a clinical classification.</li>
+          </ul>
+        </section>
+
+        <section id="answer">
+          <h2>The answer</h2>
+          <p>A ranked, cited plan for the tumor board:</p>
+          <ul>
+            <li><b>Anti-EGFR rechallenge</b> (panitumumab ± irinotecan) — SUPPORTED and the lead, if a fresh liquid biopsy shows no new resistance.</li>
+            <li><b>Trifluridine/tipiracil + bevacizumab</b> — STANDARD backbone.</li>
+            <li><b>Repeat liver-directed therapy</b> (redo resection, ablation or SBRT) — CONSIDER, if enough healthy liver remains.</li>
+            <li><b>Fruquintinib</b> — STANDARD.</li>
+            <li><b>Regorafenib</b> — STANDARD.</li>
+          </ul>
+          <p>Ruled out: immunotherapy alone (MSS), BRAF-targeted drugs (wild-type), HER2 and other targeted drugs (no target). The plan also lists the tests most likely to change it: fresh ctDNA, a liver-surgery MDT with volumetry, restaging scans, a HER2 re-test and confirming MSI status.</p>
+        </section>
+
+        <section id="science">
+          <h2>The science, in detail: hypotheses, evidence, and validation</h2>
+          <p>Each decision was framed as a testable hypothesis and checked against data or a simulation.</p>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 2.</b> Every treatment decision traces back to a checked hypothesis (molecular result, drug-gene genotype or staging finding), not to intuition.</figcaption></figure>
+          <ul>
+            <li><b>H1 — The EGFR pathway is still a target.</b> ctDNA (2026-06-12) showed RAS/BRAF still wild-type and no new S492R, MET or HER2 changes. Led to rechallenge as the lead, in the CRICKET/CHRONOS style.</li>
+            <li><b>H2 — The four drivers are real.</b> ESMC-600M scored TP53 R175H, PIK3CA E545K, SMAD4 R361H and FBXW7 R465C as deleterious (LLR ≤ −3.4). For FBXW7 R465C the mutant residue got a probability as low as 0.000001.</li>
+          </ul>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 3.</b> The model's probability for the normal versus mutant residue at each driver. A bigger gap means a more disruptive change.</figcaption></figure>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 4.</b> One ranked score per variant. All sit past the −4 threshold except PIK3CA E545K (−3.44), which is still deleterious. Supports, but does not replace, clinical interpretation.</figcaption></figure>
+          <ul>
+            <li><b>H3 — Immunotherapy alone won't help.</b> MSS with TMB 4.1 mut/Mb; the KEYNOTE-177 benefit applies to MSI-high tumors. Marked NOT INDICATED.</li>
+            <li><b>H4 — Irinotecan needs a lower dose.</b> UGT1A1 *1/*28 (rs8175347, TA7) confirmed, DPYD normal; CPIC advises a reduced dose. Any irinotecan plan starts lower, with blood-count checks.</li>
+            <li><b>H5 — The disease is liver-only.</b> Two lesions in segments II/VI, nothing outside the liver, and a CEA pattern that fits a liver relapse.</li>
+          </ul>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 5.</b> CEA over 18 months: down to 6 at R0 resection, back up to 95 at the third-line decision. Matched the clinical story in all 18 checks.</figcaption></figure>
+          <p>H5 kept repeat liver therapy at CONSIDER, pending liver-volume measurement after the earlier right hepatectomy. Four hypotheses drove an action; H3 removed one. The GPU result is a second line of evidence, not a variant classifier.</p>
+        </section>
+
+        <section id="critic">
+          <h2>The critic's side: what the research ruled out</h2>
+          <p>A plan earns trust when the tempting alternatives are tested and beaten, not just left out. Six risky assumptions were checked.</p>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 6.</b> Each challenge to the plan, its cost if true, the evidence that settled it and its status. Four of six were refuted or corrected.</figcaption></figure>
+          <div class="verdicts">
+            <div><b>A1 · "The wild-type result is out of date"</b><span>Ruled out: fresh liquid biopsy, no S492R, MET or HER2 resistance. Still gated on one more ctDNA.</span></div>
+            <div><b>A2 · "The drivers are just passengers"</b><span>Ruled out: a sequence-only model scored all four deleterious.</span></div>
+            <div><b>A3 · "MSS tumors may still respond to immunotherapy"</b><span>Eliminated: low TMB, MSS/pMMR, KEYNOTE-177 benefit is in MSI-high.</span></div>
+            <div><b>A4 · "Full-dose irinotecan is fine"</b><span>Corrected: *1/*28 genotype, CPIC guidance, and a 20% cut already needed in second line.</span></div>
+            <div><b>A5 · "The disease is more widespread"</b><span>Retained with a gate: two liver lesions only; needs liver-remnant volumetry.</span></div>
+            <div><b>A6 · "Any wild-type trial fits"</b><span>Filtered: two trials geography-locked, one earlier-line only, one needs surgical candidacy.</span></div>
+          </div>
+          <p class="pull glass">A recommendation that has survived its strongest objections is worth more than one that was simply stated.</p>
+        </section>
+
+        <section id="care">
+          <h2>Where the case review becomes care</h2>
+          <h3>Multidisciplinary review — a panel, not an opinion</h3>
+          <p>Seven reviewers (medical oncology, hepatobiliary surgery, radiation oncology, interventional radiology, molecular pathology, clinical pharmacology, patient navigation) read the same brief on their own. All agreed with the lead plan, each with conditions:</p>
+          <ul>
+            <li>Pathology: the wild-type result is older than the latest progression, so wait for a new liquid biopsy.</li>
+            <li>Surgery and radiation oncology: whether enough liver remains decides if local therapy is possible.</li>
+            <li>Pharmacology: keep the UGT1A1-based irinotecan dose cut.</li>
+            <li>Navigation: two of the five matched trials need international travel and aren't realistic.</li>
+          </ul>
+          <h3>OncoNavigator — turning the plan into a path the patient can walk</h3>
+          <p>The navigator rewrites the consensus as a roadmap: a one-line plan, ordered next steps (what, why, who, how to prepare), branch points, questions for the care team and practical details like travel, cost and second opinions.</p>
+        </section>
+
+        <section id="cycle">
+          <h2>The full cycle</h2>
+          <figure class="post-fig glass"><div style="padding:40px 20px;text-align:center;color:var(--ink-3);font-weight:600">Figure in the original article</div><figcaption><b>Figure 7.</b> Molecular data in, Claude Science synthesis, panel review, OncoNavigator roadmap and a knowledge package that carries its provenance. Each stage feeds the next.</figcaption></figure>
+        </section>
+
+        <section id="design">
+          <h2>The research behind the approach — and why we built it this way</h2>
+          <div class="post-table glass"><table class="table"><thead><tr><th>Design choice</th><th>Why it matters</th><th>What it changes</th></tr></thead><tbody>
+            <tr><td>Cross-check files (18 checks); flag conflicts</td><td>One transcription error can flip a decision</td><td>Everything downstream rests on coherent data</td></tr>
+            <tr><td>Verdict matrix that names the negatives</td><td>Costly errors are drugs given against the biomarker</td><td>Wrong therapies are blocked before being proposed</td></tr>
+            <tr><td>Live trial matching with one gate per trial</td><td>A trial the patient can't join isn't a match</td><td>A trial list becomes a one-line triage decision</td></tr>
+            <tr><td>Citations verified live (PMID/DOI)</td><td>A plan is as strong as its weakest citation</td><td>Separates auditable support from plausible fiction</td></tr>
+            <tr><td>GPU protein-model check (ESMC-600M, RTX 5090)</td><td>Independent of the clinical annotation</td><td>Adds biophysical evidence as a second opinion</td></tr>
+            <tr><td>Provenance on every output</td><td>Must be auditable by someone not in the room</td><td>Makes the cycle deployable, not a demo</td></tr>
+          </tbody></table></div>
+          <p class="tiny">Table 1 (condensed). Each design choice, why it matters and what it changes.</p>
+          <h3>Why this is a game-changer</h3>
+          <ul>
+            <li>Days of prep shrink into one traceable pass, so experts spend time on judgment.</li>
+            <li>It reaches the patient, not just the chart, through the panel and navigator.</li>
+            <li>Every output traces to a source file, trial record or verified citation, with a date.</li>
+            <li>The same platform repeats the whole cycle, from VCF to patient roadmap.</li>
+          </ul>
+        </section>
+
+        <section id="researchers">
+          <h2>For researchers: how to onboard into this cycle</h2>
+          <h3>The three layers you are joining</h3>
+          <ul>
+            <li><b>Claude Science:</b> the analysis engine, with database access, GPU jobs and a versioned artifact store.</li>
+            <li><b>Multidisciplinary review:</b> seven agents each return a strict JSON review (concurrence, concerns, next action, decisive test), merged into consensus.</li>
+            <li><b>OncoNavigator:</b> turns the consensus into a patient roadmap.</li>
+          </ul>
+          <h3>What runs, concretely</h3>
+          <ul>
+            <li><b>Data model:</b> a bundle per patient ID (profile and molecular JSON, MAF, VCF, labs CSV), checked first with 18 consistency tests.</li>
+            <li><b>Biomarker-to-therapy logic:</b> every option tied to a biomarker, an NCCN guideline and a verified landmark trial.</li>
+            <li><b>Live trial matching:</b> from ClinicalTrials.gov with the query date, ranked, with one gate each.</li>
+            <li><b>Evidence checks:</b> citations verified in PubMed; a manifest logs method and date.</li>
+            <li><b>GPU check:</b> ESMC-600M on RTX 5090 (PyTorch 2.11 / CUDA 12.8); ESMFold2-Fast optional.</li>
+            <li><b>Everything is an artifact:</b> a numbered package from case synthesis to narrative, JSON beside each PDF, each with provenance and a not-medical-advice line.</li>
+          </ul>
+          <h3>An honest note on the platform</h3>
+          <p>There's no live "Multidisciplinary" or "OncoNavigator" connector yet. Those layers are agent-simulated, with the JSON a real system would take. Connecting a live system means adding an endpoint, not redoing the science.</p>
+          <h3>Why this is worth a researcher's time — the human bottom line</h3>
+          <p>The work between a report and a patient's next step limits how many people get a carefully considered plan. Each hour saved, each wrong drug avoided and each unreachable trial filtered out helps make care faster, safer and kinder.</p>
+        </section>
+
+        <section id="summary">
+          <h2>In summary</h2>
+          <p>For a fit patient with MSS, RAS/BRAF wild-type, liver-only colorectal cancer after two lines, the cycle checked the record, gave each biomarker a verdict, screened 139 trials, verified citations and checked drivers on GPU. The result: anti-EGFR rechallenge after a fresh liquid biopsy, with repeat liver therapy possible after a volume check. A seven-discipline panel reviewed it and a navigator turned it into a roadmap.</p>
+          <p>The idea is simple: do the hard routine work reliably and traceably, so human experts can focus on judgment.</p>
+          <div class="note-box glass strong" style="margin-top:20px"><span class="ico sm" data-ico="book"></span><p><b style="color:var(--ink)">Provenance.</b> Prepared on the AiMOneHealth precision-oncology platform, built on Claude Science. Synthetic practice case PX-SYN-CRC-LIVER-001; educational demonstration, not medical advice. Query date 2026-07-05.</p></div>
+        </section>
+
+        <div class="read-original glass"><p>This mockup shows the article condensed. The original has the complete text, all tables and every figure in full.</p><a class="btn ghost sm inline" href="https://www.aimonehealth.com/blog-from-molecular-to-recommendation.html">Read the full article ↗</a></div>
+        <div class="statement glass bloom"><p class="big" style="font-size:clamp(22px,2.4vw,28px)">See the loop in action</p><p class="muted read" style="margin:12px auto 0">Try the multidisciplinary clinical simulator, or reach out and we'll walk a case with you.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px"><a class="btn primary inline" href="https://multidisciplinary.ai">Try Multidisciplinary ↗</a><a class="btn ghost inline" href="blog.html">Read more posts</a></div></div>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // highlight the section you're reading in the contents list
+  const links = [...document.querySelectorAll('.post-toc a')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.post-body > section').forEach((s) => io.observe(s));
+</script>
+</body>
+</html>

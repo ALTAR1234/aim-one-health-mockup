@@ -95,15 +95,14 @@
   foot.innerHTML = `<div class="wrap">
     <div class="foot glass bloom">
       <div class="stack">
-        <a class="logo" href="index.html"><span class="mark"><i></i></span><span><b>AiM One Health</b><small>Clinical intelligence platform</small></span></a>
-        <p class="small muted read">We turn the world's medical knowledge into clear, evidence-based guidance for one patient at a time. Your physician always makes the final decision.</p>
-        <div class="trust"><span class="badge plain">Zero PHI in demos</span><span class="badge plain">ISO 27001</span><span class="badge plain">FedRAMP High</span></div>
+        <a class="logo" href="index.html"><span class="mark"><i></i></span><span><b>AiM One Health</b><small>One Health · One Mission · Every Patient</small></span></a>
+        <p class="small muted read">We turn the medical knowledge created every day into personalized intelligence, grounded in evidence. Every patient can reach multidisciplinary expertise, understand their options and decide with confidence.</p>
       </div>
-      <div><h4>Platform</h4><ul><li><a href="tools.html">Our tools</a></li><li><a href="tools.html#how">How it works</a></li><li><a href="report.html">Sample report</a></li><li><a href="navigator.html">Oncology Navigator</a></li><li><a href="research.html">Open Research</a></li></ul></div>
-      <div><h4>Learn</h4><ul><li><a href="resources.html">Resources</a></li><li><a href="resources.html#papers">Whitepapers</a></li><li><a href="blog.html">Blog</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="index.html">Our mission</a></li><li><a href="request.html">Request a Care Pathway</a></li><li><a href="mailto:info@aimonehealth.com">info@aimonehealth.com</a></li></ul></div>
+      <div><h4>Our tools</h4><ul><li><a href="navigator.html">Navigator</a></li><li><a href="research.html">Open Research</a></li><li><a href="tools.html#document">Care Pathway Research Document</a></li><li><a href="tools.html#how">How it earns confidence</a></li><li><a href="report.html">Sample reports</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="index.html#aspire">What we aspire to create</a></li><li><a href="index.html#principle">Guiding principle</a></li><li><a href="resources.html">Resources</a></li><li><a href="blog.html">Blog</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="index.html#vision">Vision &amp; Mission</a></li><li><a href="request.html">Request a Care Pathway</a></li><li><a href="mailto:info@aimonehealth.com">info@aimonehealth.com</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>© 2026 AiM One Health, Inc.</span><span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Security</a> · <a href="#">HIPAA notice</a></span></div>
+    <div class="foot-bottom"><span>© 2026 AIM One Health, Inc. All rights reserved.</span><span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Security</a> · <a href="#">HIPAA notice</a></span></div>
   </div>`;
   document.body.append(foot);
 

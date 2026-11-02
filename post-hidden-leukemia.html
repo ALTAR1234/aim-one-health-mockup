@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnosing a Hidden Leukemia in the ED · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+</head>
+<!-- Mockup article page. Body text is condensed; every section, table and figure of the original is represented, and the full text is linked. -->
+<body data-page="blog.html">
+<main id="main">
+  <section class="post-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="blog.html">Blog</a><span>›</span><span>Clinical Research</span></nav>
+      <span class="badge" style="margin-top:20px">Clinical Research</span>
+      <h1>Diagnosing a Hidden Leukemia in the Emergency Department</h1>
+      <p class="lead read">A synthetic patient followed from ED triage to remission by a grounded multi-agent AI reasoning system, with every recommendation kept auditable.</p>
+      <div class="post-meta"><span class="who"><i>AiM</i>AiMOneHealth Clinical Research</span><span>Jul 6, 2026</span><span>15 min read</span></div>
+      <figure class="post-cover glass"><img src="https://www.aimonehealth.com/images/blog/apl-hero.jpg" alt="Visual abstract: from ED recognition of suspected APL with DIC through urgent differentiation therapy to survivorship."><figcaption><b>Figure 1.</b> Visual abstract: recognizing suspected APL with DIC in the ED, urgent differentiation therapy, survivorship, and the molecular reason ATRA + arsenic trioxide works. Synthetic values.</figcaption></figure>
+    </div>
+  </section>
+
+  <section style="padding-top:12px">
+    <div class="wrap post-layout">
+      <aside class="post-toc glass strong" aria-label="In this article">
+        <h4>In this article</h4>
+        <a href="#glance" class="on">At a glance</a><a href="#abstract">Abstract</a><a href="#intro">1 · Introduction</a><a href="#methods">2 · Methods</a><a href="#results">3 · Results</a><a href="#limits">4 · Limitations</a><a href="#conclusions">5 · Conclusions</a>
+      </aside>
+
+      <article class="post-body">
+        <div class="note-box glass strong"><span class="ico sm" data-ico="shield"></span><p>One synthetic case on the Claude Science platform (scenario PX-SYN-ER-APL-001): acute promyelocytic leukemia (APL) with disseminated intravascular coagulation (DIC). No real patient data. For research and education only, not medical advice.</p></div>
+
+        <section id="glance">
+          <h2>At a glance</h2>
+          <div class="facts">
+            <div class="stat glass"><b>0.25 → 0.98</b><span>Consensus belief in APL, triage to disposition</span></div>
+            <div class="stat glass"><b>208 / 209</b><span>Recommendations grounded in a source</span></div>
+            <div class="stat glass"><b>100% vs 17%</b><span>Citation coverage vs single model</span></div>
+            <div class="stat glass"><b>100% vs 83%</b><span>Safety-flag recall vs single model</span></div>
+            <div class="stat glass"><b>41 vs 0</b><span>Recruiting-trial matches</span></div>
+          </div>
+          <p>An APL patient can look like someone with a mild virus, and missing it can be fatal within days. Caught early and treated with ATRA plus arsenic trioxide, it's usually curable. The study asks whether a multidisciplinary AI system can follow the whole journey, from triage to remission, while showing its reasoning at every step.</p>
+        </section>
+
+        <section id="abstract">
+          <h2>Abstract</h2>
+          <ul>
+            <li><b>Background:</b> APL with DIC is an emergency where recognition at triage is the error-prone step. The study tested whether the BrainMAAS reasoning system could handle the full care arc auditably.</li>
+            <li><b>Methods:</b> One synthetic scenario across five stages. A council of seven specialist agents, a router, a consensus layer and a citation rule reasoned over live sources (ClinicalTrials.gov, PubMed, ChEMBL, ICD-10). A single-model baseline without retrieval was the comparison.</li>
+            <li><b>Results:</b> Belief in APL rose 0.25 → 0.98, with a deliberate dip when other causes became plausible. ATRA was started on strong suspicion before genetic confirmation. Both arms reached the diagnosis at stage 2; the system did better on calibration, safety flags, citations and trial matches.</li>
+            <li><b>Conclusions:</b> The scaffold didn't make diagnosis more accurate, but it made the reasoning grounded, safety-checked and easy to follow. Wider validation is needed before drawing clinical conclusions.</li>
+          </ul>
+        </section>
+
+        <section id="intro">
+          <h2>1 · Introduction</h2>
+          <p>Prognosis in APL depends on recognizing it quickly and starting differentiation therapy before the genetic test comes back. The report states each claim as a clinical hypothesis and checks it against what the simulation actually produced, with methods and limits laid out so others can scrutinize and reproduce it.</p>
+        </section>
+
+        <section id="methods">
+          <h2>2 · Methods</h2>
+          <h3>2.1 Scenario and study design</h3>
+          <p>One synthetic scenario in five stages: triage, first lab results, deterioration, the critical treatment decision, and disposition. With a single case, the goal is to show how the system behaves, not to measure accuracy across a population.</p>
+          <h3>2.2 System architecture (BrainMAAS)</h3>
+          <p>Four layers: a live, provenance-hashed evidence store; a router that picks which specialists lead at each stage (Emergency Medicine at triage, Hematology-Oncology after labs); seven specialist agents reasoning in parallel; and a ranking layer that builds the plan under a citation rule. Every therapy suggestion needs a source and a confidence level, and any claim that can't be grounded must be declared rather than invented.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-council-engagement.jpg" alt="Specialist-council engagement across the five ED stages."><figcaption><b>Figure 2.</b> Which specialist councils are off, consulted or leading at each of the five stages.</figcaption></figure>
+          <h3>2.3 Comparator</h3>
+          <p>The same model, called once per stage with the same clinical picture but no retrieval, no councils and no citation rule, isolating what the scaffold adds.</p>
+          <h3>2.4 Molecular constraint analysis</h3>
+          <p>ESMC-600M scored every single-residue change across the 246-residue RARα ligand-binding domain (4,920 estimates) to find the most mutation-intolerant positions. A 3D structure prediction was attempted but not completed because of a network limit.</p>
+          <h3>2.5 Endpoints</h3>
+          <p>The belief trajectory, treatment-plan quality (0–5), calibration (1 − Brier score), recall on a six-item safety checklist, routing precision, citation coverage and recruiting-trial matches.</p>
+        </section>
+
+        <section id="results">
+          <h2>3 · Results</h2>
+          <h3>3.1 Diagnostic trajectory</h3>
+          <p>Confidence rose for reasons visible at each stage. The key move came at stage 3, when ATRA was started before the genetics confirmed it. Confidence dipped slightly at deterioration because other causes of bleeding became plausible, then recovered with the molecular result.</p>
+          <div class="post-table glass"><table class="table"><thead><tr><th>Stage</th><th>P(APL)</th><th>Lead specialty</th><th>Top grounded action</th></tr></thead><tbody>
+            <tr><td>1 · Triage</td><td>0.25</td><td>Emergency Medicine</td><td>STAT blood count, smear and clotting panel; avoid invasive procedures</td></tr>
+            <tr><td>2 · Initial labs</td><td>0.91</td><td>Hematology-Oncology</td><td>Recognize the bleeding-clotting syndrome; code C92.40 + D65</td></tr>
+            <tr><td>3 · Deterioration</td><td>0.88</td><td>Hematology-Oncology</td><td>Start empiric ATRA now, with transfusion support</td></tr>
+            <tr><td>4 · Critical decision</td><td>0.91</td><td>Hematology-Oncology</td><td>ATRA + arsenic trioxide frontline (PMID 23841729)</td></tr>
+            <tr><td>5 · Disposition</td><td>0.98</td><td>Hematology-Oncology</td><td>Confirm coding; match to recruiting trials</td></tr>
+          </tbody></table></div>
+          <p class="tiny">Table 1. The five stages, consensus probability of APL, lead specialty and top action.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-belief-trajectory.jpg" alt="Diagnostic belief trajectory from 0.25 to 0.98."><figcaption><b>Figure 3.</b> Belief in APL climbing from 0.25 to 0.98, with competing diagnoses shown as dashed lines.</figcaption></figure>
+
+          <h3>3.2 Hypothesis testing</h3>
+          <div class="post-table glass"><table class="table"><thead><tr><th>#</th><th>Hypothesis</th><th>Evidence</th><th>Status</th></tr></thead><tbody>
+            <tr><td>H1</td><td>APL, not a benign virus</td><td>Smear 38% promyelocytes; low counts and clotting problems</td><td><span class="badge ok">Confirmed</span></td></tr>
+            <tr><td>H2</td><td>Clotting problem is DIC, not isolated ITP</td><td>Fibrinogen 88, D-dimer 14.5, INR 1.9, platelets 18k</td><td><span class="badge ok">Confirmed</span></td></tr>
+            <tr><td>H3</td><td>Empiric ATRA before genetics cuts early deaths</td><td>Guideline (PMID 18024625); P(APL) 0.88</td><td><span class="badge">Supported</span></td></tr>
+            <tr><td>H4</td><td>ATRA + arsenic trioxide over ATRA + chemo</td><td>Lo-Coco NEJM 2013 (PMID 23841729)</td><td><span class="badge ok">Confirmed</span></td></tr>
+            <tr><td>H5</td><td>The drug's binding pocket is highly constrained</td><td>ESMC-600M scan</td><td><span class="badge ok">Confirmed</span></td></tr>
+            <tr><td>H6</td><td>Grounded team reasoning beats a single model on safety</td><td>Citations 100% vs 17%; safety 100% vs 83%</td><td><span class="badge ok">Confirmed</span></td></tr>
+            <tr><td>H7</td><td>Belief moves for inspectable reasons</td><td>0.25 → 0.91 → 0.88 → 0.91 → 0.98</td><td><span class="badge ok">Confirmed</span></td></tr>
+          </tbody></table></div>
+          <p class="tiny">Table 2 (condensed). Each hypothesis, the evidence behind it and its status.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-hypotheses.jpg" alt="Hypotheses, evidence, decisions and status."><figcaption><b>Figure 4.</b> Visual companion to Table 2.</figcaption></figure>
+
+          <h3>3.3 Differential falsification</h3>
+          <p>Each competing diagnosis had to be ruled out for a specific reason:</p>
+          <div class="verdicts">
+            <div><b>Benign viral illness</b><span>Eliminated by the smear and clotting results.</span></div>
+            <div><b>Immune thrombocytopenia</b><span>Ruled out by the DIC panel.</span></div>
+            <div><b>TTP</b><span>Ruled out: no schistocyte picture.</span></div>
+            <div><b>Sepsis-driven DIC</b><span>Ruled out: no infection source.</span></div>
+            <div><b>Wait for genetic test before ATRA</b><span>Corrected: guidelines support treating on strong suspicion.</span></div>
+            <div><b>One strong model is enough</b><span>Kept only as a gated comparison: 17% citations, a missed safety flag, no trial matches.</span></div>
+          </div>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-falsification.jpg" alt="Competing diagnoses driven toward zero."><figcaption><b>Figure 5.</b> Competing diagnoses falling to zero as APL rises, and the critic's ledger.</figcaption></figure>
+          <p class="pull glass">A diagnosis you can defend is one where you can show why it isn't each of the other things it could have been.</p>
+
+          <h3>3.4 System versus baseline</h3>
+          <div class="post-table glass"><table class="table"><thead><tr><th>Endpoint</th><th>BrainMAAS</th><th>Single model</th><th>Winner</th></tr></thead><tbody>
+            <tr><td>Treatment-plan quality (0–5)</td><td>4.40</td><td>3.40</td><td>BrainMAAS</td></tr>
+            <tr><td>Time to correct diagnosis</td><td>Stage 2</td><td>Stage 2</td><td>Tie</td></tr>
+            <tr><td>Calibration (1 − Brier)</td><td>0.881</td><td>0.850</td><td>BrainMAAS</td></tr>
+            <tr><td>Safety-flag recall (6 items)</td><td>100%</td><td>83%</td><td>BrainMAAS</td></tr>
+            <tr><td>Specialist-routing precision</td><td>100%</td><td>—</td><td>BrainMAAS</td></tr>
+            <tr><td>Citation coverage</td><td>100%</td><td>17%</td><td>BrainMAAS</td></tr>
+            <tr><td>Recruiting-trial matches</td><td>41</td><td>0</td><td>BrainMAAS</td></tr>
+          </tbody></table></div>
+          <p class="tiny">Table 3. Endpoints for the grounded system vs a single-model baseline.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-system-vs-baseline.png" alt="System versus baseline scores."><figcaption><b>Figure 6.</b> A tie on diagnosis, a clear gap on grounding, safety and routing.</figcaption></figure>
+
+          <h3>3.5 Molecular constraint on the drug target</h3>
+          <p>The most mutation-intolerant positions sit in the ligand pocket and helical core of RARα, the receptor ATRA re-activates. The drug relies on the most conserved part of its target, one reason the treatment works so reliably.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-rara-constraint.jpg" alt="Variant-effect scan of the RARα ligand-binding domain."><figcaption><b>Figure 7.</b> Variant-effect heatmap and per-residue constraint across the RARα ligand-binding domain.</figcaption></figure>
+
+          <h3>3.6 Clinical course</h3>
+          <p>Vital signs were most unstable at deterioration, with a fever bump during induction, then normalized. Labs show the DIC crisis, its correction, and molecular clearance of PML-RARA by consolidation. Heart rhythm (QTc) was watched throughout.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-vitals.jpg" alt="Vital-sign trajectory."><figcaption><b>Figure 8.</b> Vital signs across the care arc.</figcaption></figure>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-labs.jpg" alt="Longitudinal laboratories."><figcaption><b>Figure 9.</b> Labs from triage to sustained remission.</figcaption></figure>
+
+          <h3>3.7 The full care arc and trial matching</h3>
+          <p>After stabilization: induction, consolidation, maintenance, molecular remission and survivorship, each with its own monitoring. Live matching ranked recruiting trials; the top fit was a Phase 3 ATRA-combination trial (NCT07504458). Survivorship covers heart, bone, fertility and emotional support.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-care-arc.jpg" alt="The full navigation arc."><figcaption><b>Figure 10.</b> The care arc from ED stabilization to survivorship.</figcaption></figure>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/apl-trial-matches.png" alt="Recruiting-trial matches."><figcaption><b>Figure 11.</b> Recruiting trials ranked by eligibility fit.</figcaption></figure>
+
+          <h3>3.8 Engineering course-corrections</h3>
+          <ul>
+            <li>Giving each council stage-specific information fixed an early run that stalled at about 0.85.</li>
+            <li>Per-request limits and a fallback fixed empty answers at the final stage.</li>
+            <li>An audit caught a chart plotting design assumptions instead of logged values; it was corrected.</li>
+            <li>One claim couldn't be grounded, so the system said so instead of inventing a citation: 208 of 209 grounded.</li>
+          </ul>
+        </section>
+
+        <section id="limits">
+          <h2>4 · Limitations</h2>
+          <p>This is one synthetic case. It shows how the system reasons but can't establish accuracy or superiority. Other caveats: idealized synthetic data, scoring against the simulation's own outputs, no external validation or second rater, a computational (not lab) molecular analysis, and retrieval from a single point in time.</p>
+        </section>
+
+        <section id="conclusions">
+          <h2>5 · Conclusions</h2>
+          <p>The system followed the case from triage to survivorship, started treatment at the right moment, tracked safety, and matched trials, with every recommendation traceable. It didn't out-diagnose the single model; its value was grounding, safety, calibration and navigation, including admitting the one claim it couldn't support.</p>
+          <div class="note-box glass strong" style="margin-top:20px"><span class="ico sm" data-ico="book"></span><p><b style="color:var(--ink)">Provenance.</b> Built on Claude Science. Sources: ClinicalTrials.gov, PubMed, ChEMBL, ICD-10. Molecular analysis: ESMC-600M on an NVIDIA RTX 5090. Synthetic data; not medical advice.</p></div>
+        </section>
+
+        <div class="read-original glass"><p>This mockup shows the article condensed. The original has the complete text, all tables and every figure in full.</p><a class="btn ghost sm inline" href="https://www.aimonehealth.com/blog-hidden-leukemia-in-the-ed.html">Read the full article ↗</a></div>
+        <div class="statement glass bloom"><p class="big" style="font-size:clamp(22px,2.4vw,28px)">See the loop in action</p><p class="muted read" style="margin:12px auto 0">Try the multidisciplinary clinical simulator, or reach out and we'll walk a case with you.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px"><a class="btn primary inline" href="https://multidisciplinary.ai">Try Multidisciplinary ↗</a><a class="btn ghost inline" href="blog.html">Read more posts</a></div></div>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // highlight the section you're reading in the contents list
+  const links = [...document.querySelectorAll('.post-toc a')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.post-body > section').forEach((s) => io.observe(s));
+</script>
+</body>
+</html>

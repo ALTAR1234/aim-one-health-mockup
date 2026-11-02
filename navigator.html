@@ -96,58 +96,30 @@
   </section>
 </main>
 
-<div class="scrim" id="scrim"></div>
-<aside class="sheet glass strong" id="sheet" aria-hidden="true">
-  <button class="icon-btn close" id="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-  <div id="sheetBody"></div>
-</aside>
-
 <script src="site.js"></script>
 <script>
-  // Conditions as listed on nav.onconavigator.ai (category, name, theme, quality-gate properties)
-  const DATA = [["BRAIN & CNS","Glioblastoma, IDH-wildtype (adult)","Flagship trainer",10],["BLOOD & MARROW","Acute lymphoblastic leukemia (adult)","Mixture-cure family · v1.4 upgrade",12],["BLOOD & MARROW","Acute lymphoblastic leukemia (children)","First two-developer-era run",12],["BLOOD & MARROW","Acute lymphoblastic leukemia (infants <1 yr, KMT2A-rearranged)","The KMT2A biology · the blinatumomab turn",14],["BLOOD & MARROW","Acute myeloid leukemia","First factory-built",10],["BLOOD & MARROW","Acute promyelocytic leukemia (adult)","The split the AML run opened",13],["BLOOD & MARROW","Chronic lymphocytic leukemia","Watch-and-wait modeled as a ranked arm",12],["BLOOD & MARROW","Chronic myelogenous leukemia","Born with the care-delivery layer",11],["BLOOD & MARROW","Hairy cell leukemia","The five-day cure, kept honest",11],["BLOOD & MARROW","Myelodysplastic neoplasms (MDS, adult)","Two goals, one honest scoreboard",14],["BLOOD & MARROW","Myeloproliferative neoplasms (PV / ET / myelofibrosis)","The JAK era · the count-control discipline",13],["BLOOD & MARROW","MDS/MPN overlap neoplasms (CMML)","The MDS/MPN overlap · the post-HMA cliff",14],["BLOOD & MARROW","Multiple myeloma / plasma cell neoplasms","The marathon · ranked only on what has finished aging",13],["BLOOD & MARROW","AL (light-chain) amyloidosis","The two-currency disease · the anti-fibril frontier",13],["LYMPHOMA","Classic Hodgkin lymphoma (age ≥12)","The scan that removes a drug · Deauville checkpoint",11],["LYMPHOMA","Nodular lymphocyte-predominant B-cell lymphoma","The renamed entity · the transformation watch",14],["LYMPHOMA","Diffuse large B-cell lymphoma","The 12-month line · three trials, one question",14],["LYMPHOMA","High-grade B-cell lymphoma (double-hit)","FISH decides; no trial ever proved the intensity",12],["LYMPHOMA","Primary mediastinal B-cell lymphoma","The radiation-sparing turn",14],["LYMPHOMA","Follicular lymphoma","The scoreboard is burden, not survival",14],["LYMPHOMA","Primary cutaneous follicle centre lymphoma","The skin-limited entity · the over-treatment lesson",12],["LYMPHOMA","Primary CNS lymphoma","Two currencies: survival and cognition",12],["BREAST","Breast cancer (early stage)","The operation is also a readout · pCR-adaptive therapy",13],["BREAST","Inflammatory breast cancer (nonmetastatic)","The clinical-diagnosis emergency",12],["BREAST","Breast cancer (metastatic)","Goals change, honesty doesn't · the HER2-low rewrite",12],["BREAST","Ductal carcinoma in situ","Recurrence is not survival · the watching frontier",10],["LUNG & THORAX","Non-small cell lung cancer","The ticket rack · ten drivers, one panel",12],["LUNG & THORAX","Small cell lung cancer","Tempo is the biology",11],["GI","Colorectal cancer","The ctDNA frontier · organ preservation earned",12],["GI","Pancreatic cancer","The resectability fork · the pan-RAS turn",12],["GU","Prostate cancer","The risk ladder · the intensification era",13],["GU","Bladder cancer","The intravesical era · the EV+P rewrite",13],["GU","Kidney (renal cell) cancer","The doublet era · the adjuvant honesty ledger",13],["SKIN","Melanoma","The immunotherapy flagship · the neoadjuvant turn",13],["SKIN","Basal cell skin cancer","The commonest cancer · the rarest killer",12],["SKIN","Squamous cell skin cancer","The dangerous sibling · the transplant multiplier",14],["SKIN","Merkel cell carcinoma","The virus-made skin cancer · the IO-first chapter",14],["GYNECOLOGIC","Ovarian / fallopian tube / primary peritoneal","The PARP maintenance era · the HRD fork",13],["GYNECOLOGIC","Endometrial (uterine) cancer","The molecular reclassification · the dMMR-IO era",13],["GYNECOLOGIC","Uterine sarcoma","The accidental diagnosis · histology is the disease",12],["GYNECOLOGIC","Cervical cancer","The preventable disease · the chemoradiation-IO turn",13],["HEAD, NECK & ENDOCRINE","Head and neck squamous cancers","The HPV fork · the de-escalation frontier",14],["HEAD, NECK & ENDOCRINE","Thyroid cancer","The good-prognosis trap · watching earned its trial",13],["GI","Esophageal cancer","The trimodality standard · the adjuvant-IO turn",15],["GI","Gastric (stomach) cancer","The perioperative backbone · the biomarker quartet",15],["GI","Hepatocellular (liver) cancer","The two-disease problem · the IO-doublet era",14],["GI","Bile duct / gallbladder cancer","The actionable-alteration surprise",13],["GI","Anal cancer","The surgery-sparing original",14],["GI","Appendiceal cancer","The incidental diagnosis · grade is destiny",12],["GU","Testicular cancer","The curable archetype · surveillance is a spine",13],["BONE & SOFT TISSUE","Soft tissue sarcoma","Seventy diseases · histology routes everything",12],["GI","Gastrointestinal stromal tumor","The targeted-therapy original · genotype is the dose",12],["BONE & SOFT TISSUE","Osteosarcoma","The forty-year plateau · MAP and the honest map",13],["BONE & SOFT TISSUE","Ewing sarcoma","The fusion-defined bone cancer",13],["LUNG & THORAX","Mesothelioma","The exposure-made cancer · the IO-doublet rewrite",13],["GI","Gastrointestinal neuroendocrine tumors","The slow cancer with a clock of its own",13],["GI","Pancreatic neuroendocrine tumors","The functional-syndrome family",13],["LUNG & THORAX","Thymoma and thymic carcinoma","The two-disease mediastinum",12],["HEAD, NECK & ENDOCRINE","Adrenal tumors (adrenocortical, pheo/paraganglioma)","The hormone-first gland",13],["GI","Small bowel adenocarcinoma","First bottom-up run",14]];
-  const COLORS = { 'BLOOD & MARROW': '#c2414b', LYMPHOMA: '#8b48c9', BREAST: '#c2417f', 'LUNG & THORAX': '#2563c9', GI: '#b8641c', GU: '#0e7a4f', GYNECOLOGIC: '#a43d9c', SKIN: '#9a6a12', 'BONE & SOFT TISSUE': '#55606e', 'HEAD, NECK & ENDOCRINE': '#0a6f79', 'BRAIN & CNS': '#3f4fc7' };
-  const title = (c) => c.toLowerCase().replace(/(^|[\s&,]+)(\w)/g, (m) => m.toUpperCase()).replace(' & ', ' & ').replace('Gi', 'GI').replace('Gu', 'GU').replace('Cns', 'CNS');
+  // All 61 trainers, from trainers/index.json (pulled from the Navigator's own content API)
+  const COLORS = { 'BLOOD & MARROW': '#c2414b', LYMPHOMA: '#8b48c9', BREAST: '#c2417f', 'LUNG & THORAX': '#2563c9', GI: '#b8641c', GU: '#0e7a4f', GYNECOLOGIC: '#a43d9c', SKIN: '#9a6a12', 'BONE & SOFT TISSUE': '#55606e', 'HEAD, NECK & ENDOCRINE': '#0a6f79', 'BRAIN & CNS': '#3f4fc7', 'CROSS-CUTTING': '#6b5bd6' };
+  const title = (c) => c.toLowerCase().replace(/(^|[\s&,]+)(\w)/g, (m) => m.toUpperCase()).replace(/\bGi\b/, 'GI').replace(/\bGu\b/, 'GU').replace(/\bCns\b/, 'CNS');
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-  const cats = ['All', ...new Set(DATA.map((d) => d[0]))];
-  let cat = 'All';
-  document.getElementById('cats').innerHTML = cats.map((c) => `<button class="chip${c === 'All' ? ' on' : ''}" data-c="${esc(c)}" role="tab">${c === 'All' ? 'All' : title(c)} <span class="n">${c === 'All' ? DATA.length : DATA.filter((d) => d[0] === c).length}</span></button>`).join('');
+  let DATA = [], cat = 'All';
   const draw = () => {
     const q = document.getElementById('q').value.trim().toLowerCase();
-    const list = DATA.filter((d) => (cat === 'All' || d[0] === cat) && (!q || d.join(' ').toLowerCase().includes(q)));
+    const list = DATA.filter((d) => (cat === 'All' || d.category === cat) && (!q || `${d.name} ${d.theme} ${d.category} ${d.page} ${d.key}`.toLowerCase().includes(q)));
     document.getElementById('count').textContent = `Showing ${list.length} of ${DATA.length} trainers`;
     document.getElementById('cards').innerHTML = list.length
-      ? list.map((d) => `<button class="cond glass lift" style="--c:${COLORS[d[0]] || 'var(--accent)'}" data-i="${DATA.indexOf(d)}"><span class="cat">${title(d[0])}</span><h3>${esc(d[1])}</h3><p>${esc(d[2])}</p><span class="meta"><span>✓ Gate passed · ${d[3]} properties</span><span>Open →</span></span></button>`).join('')
+      ? list.map((d) => `<a class="cond glass lift" style="--c:${COLORS[d.category] || 'var(--accent)'};text-decoration:none" href="trainer.html?t=${encodeURIComponent(d.page)}"><span class="cat">${title(d.category)}</span><h3>${esc(d.name)}</h3><p>${esc(d.theme.replace(/^\w/, (c) => c.toUpperCase()))}</p><span class="meta"><span>✓ Gate passed · ${d.props} properties</span><span>${d.arms} options · ${d.refs} sources →</span></span></a>`).join('')
       : '<div class="empty glass">No trainers match that search. Try a broader term, like “leukemia”.</div>';
   };
-  document.getElementById('cats').onclick = (e) => {
-    const b = e.target.closest('[data-c]');
-    if (!b) return;
-    cat = b.dataset.c;
-    document.querySelectorAll('#cats .chip').forEach((x) => x.classList.toggle('on', x === b));
+  fetch('trainers/index.json').then((r) => r.json()).then((list) => {
+    DATA = list;
+    const cats = ['All', ...new Set(DATA.map((d) => d.category))];
+    const chips = document.getElementById('cats');
+    chips.innerHTML = cats.map((c) => `<button class="chip${c === 'All' ? ' on' : ''}" data-c="${esc(c)}" role="tab">${c === 'All' ? 'All' : title(c)} <span class="n">${c === 'All' ? DATA.length : DATA.filter((d) => d.category === c).length}</span></button>`).join('');
+    chips.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; chips.querySelectorAll('.chip').forEach((x) => x.classList.toggle('on', x === b)); draw(); };
+    document.getElementById('q').oninput = draw;
     draw();
-  };
-  document.getElementById('q').oninput = draw;
-  draw();
-  // details sheet
-  const sheet = document.getElementById('sheet'), scrim = document.getElementById('scrim');
-  const close = () => { sheet.classList.remove('open'); scrim.classList.remove('open'); sheet.setAttribute('aria-hidden', 'true'); };
-  document.getElementById('cards').onclick = (e) => {
-    const b = e.target.closest('[data-i]');
-    if (!b) return;
-    const d = DATA[b.dataset.i];
-    document.getElementById('sheetBody').innerHTML = `<span class="badge" style="color:${COLORS[d[0]]};background:color-mix(in srgb, ${COLORS[d[0]]} 12%, transparent)">${title(d[0])}</span>
-      <h2>${esc(d[1])}</h2><p class="muted">${esc(d[2])}</p>
-      <div class="facts"><div><b>${d[3]}</b><span>Quality properties checked</span></div><div><b>✓</b><span>Passing the release gate</span></div></div>
-      <h4>In this trainer</h4>
-      <ul class="checks" style="margin:14px 0 26px"><li>Synthetic patient scenarios to work through</li><li>Ranked treatment options, each linked to its source</li><li>Case quizzes with honest grading</li><li>Clinical-trial entry points</li></ul>
-      <a class="btn primary" style="width:100%" href="https://nav.onconavigator.ai">Start this trainer <span class="arrow">→</span></a>
-      <p class="tiny" style="margin-top:14px">For education and training only. Synthetic patients; not medical advice.</p>`;
-    sheet.classList.add('open'); scrim.classList.add('open'); sheet.setAttribute('aria-hidden', 'false');
-  };
-  document.getElementById('close').onclick = close;
-  scrim.onclick = close;
-  addEventListener('keydown', (e) => e.key === 'Escape' && close());
+  }).catch(() => { document.getElementById('cards').innerHTML = '<div class="empty glass">Trainers could not be loaded. Open this mockup through “Open mockup.cmd”.</div>'; });
 </script>
 </body>
 </html>

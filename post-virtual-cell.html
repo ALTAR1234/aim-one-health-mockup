@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a Virtual Cell · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+</head>
+<!-- Mockup article page. Body text is condensed; every section, table and figure of the original is represented, and the full text is linked. -->
+<body data-page="blog.html">
+<main id="main">
+  <section class="post-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="blog.html">Blog</a><span>›</span><span>Rare Disease Innovation</span></nav>
+      <span class="badge" style="margin-top:20px">Rare Disease Innovation</span>
+      <h1>Building a Virtual Cell to Rank Gene-Therapy Strategies — Before the Lab</h1>
+      <p class="lead read">One variant, every rescue strategy simulated, a model tuned until it checks out, and the single measurement that would most raise confidence.</p>
+      <div class="post-meta"><span class="who"><i>AiM</i>AiMOneHealth Science Team</span><span>Jul 6, 2026</span><span>12 min read</span></div>
+      <figure class="post-cover glass"><img src="https://www.aimonehealth.com/images/blog/virtualcell-hero.jpg" alt="The virtual-cell workflow: from a single variant to a ranked, condition-dependent gene-therapy rescue plan."><figcaption><b>Figure 1.</b> From variant to a ranked rescue plan. The lower band shows each round of iteration tightening the estimate, from a wide ~28% prior to a tight ~79% at brain-wide delivery.</figcaption></figure>
+    </div>
+  </section>
+
+  <section style="padding-top:12px">
+    <div class="wrap post-layout">
+      <aside class="post-toc glass strong" aria-label="In this article">
+        <h4>In this article</h4>
+        <a href="#glance" class="on">At a glance</a><a href="#what">What a virtual cell is</a><a href="#case">The case</a><a href="#rescue">The rescue analysis</a><a href="#iteration">The iteration loop</a><a href="#confidence">Making confidence concrete</a><a href="#interventions">The ranked interventions</a><a href="#hypotheses">Hypotheses and alternatives</a><a href="#program">From model to program</a><a href="#why">Why this matters</a>
+      </aside>
+
+      <article class="post-body">
+        <div class="note-box glass strong"><span class="ico sm" data-ico="shield"></span><p>Educational demonstration on a synthetic case (SYN-NEXMIF-0001). No real patient data. Not medical advice. All numbers are literature-based priors, not measurements: they show which strategy wins and what matters most, not a promised clinical result.</p></div>
+
+        <section id="glance">
+          <h2>At a glance</h2>
+          <div class="facts">
+            <div class="stat glass"><b>41% → 79%</b><span>Modeled protein restored by gene reintroduction</span></div>
+            <div class="stat glass"><b>~91%</b><span>Outcome variance explained by CNS delivery</span></div>
+            <div class="stat glass"><b>±11.4 of ±11.9</b><span>Spread resolved by measuring delivery</span></div>
+            <div class="stat glass"><b>7th of 27</b><span>Evo2 rank of the patient's variant</span></div>
+            <div class="stat glass"><b>20,000</b><span>Monte-Carlo draws per scenario</span></div>
+          </div>
+          <p>This workflow turns one genetic variant into a ranked list of gene-therapy options, each with its reason for failing, before any lab money is spent. The post is open about where the model is weakest.</p>
+        </section>
+
+        <section id="what">
+          <h2>What a "virtual cell" is here</h2>
+          <p>It's a computer model of only the biology needed for the question. Here that's a simple chain: gene to mRNA, mRNA to protein, protein to neuron function. The patient's mutation breaks the first link.</p>
+          <p>A few linked equations track therapy mRNA, the protein made from it, and a neuron-function score that depends on protein level and treatment timing. On top sits a rescue score:</p>
+          <p class="pull glass">molecular rescue = delivery × on-target action × full-length yield × NMD-escape × activity</p>
+          <p>Each factor is a probability drawn from a range, so each simulated experiment is 20,000 draws giving a spread of outcomes. NMD (nonsense-mediated decay) is the cell's system for destroying faulty mRNA; NMD-escape is the share that survives.</p>
+        </section>
+
+        <section id="case">
+          <h2>The case the virtual cell was built to answer</h2>
+          <h3>Synthetic case · SYN-NEXMIF-0001</h3>
+          <p>A boy has a nonsense variant in NEXMIF (c.602C>A, p.Ser201Ter), a brain gene neurons need to grow and connect. The early stop means the mRNA is likely destroyed, leaving about 0% working protein. The gene is on the X chromosome, so he has no backup copy.</p>
+          <p>The model's inputs were fetched from primary sources, not recalled:</p>
+          <ul>
+            <li>Transcript NM_001008537.3 (NCBI).</li>
+            <li>Stop codon 3,856 nucleotides before the last exon junction, so NMD is expected.</li>
+            <li>~3.5× higher expression in brain (GTEx).</li>
+            <li>Almost no tolerance for loss of function (gnomAD pLI ≈ 1.0, LOEUF 0.23).</li>
+          </ul>
+        </section>
+
+        <section id="rescue">
+          <h2>Running the rescue analysis</h2>
+          <p>Each therapy was plugged into the same model with its own five factors. Gene reintroduction gives a clean copy (high yield, high NMD-escape) but is limited by delivery. Readthrough has very low yield because it can't rebuild the missing protein. Every scenario ran 20,000 draws over 180 simulated days, across delivery levels (poor to brain-wide) and ages (infant to adult).</p>
+          <ul>
+            <li><b>Gene reintroduction:</b> 41% at base delivery, 79% brain-wide.</li>
+            <li><b>Prime editing:</b> 14% → 30%.</li>
+            <li><b>Readthrough and HDR:</b> under ~3.4%, not viable, each failing on a named factor.</li>
+          </ul>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-protein-restored.png" alt="Modeled protein restored by each strategy across CNS delivery regimes."><figcaption><b>Figure 2.</b> Protein restored by each strategy across delivery levels. Only gene reintroduction clears the 25%-of-normal bar, and only as delivery improves.</figcaption></figure>
+        </section>
+
+        <section id="iteration">
+          <h2>The iteration loop — and the moment it earned trust</h2>
+          <p>The time-based model and the simple five-factor product must agree at steady state. If they don't, the model is adding behavior nobody can audit.</p>
+          <p>The first version didn't agree. A 1.05 expression multiplier gave 43% and 83% instead of the reference 41% and 79%, quietly inventing 2–4 points of rescue. Setting it to 1.0 made the results match exactly. Now the simulator adds only timing on top of the transparent model.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-iteration-payoff.jpg" alt="The payoff of iteration: each round tightens the predicted-protein distribution and lifts the median."><figcaption><b>Figure 3.</b> Each round narrows the estimate and moves it toward the calibrated ~79% at brain-wide delivery, clearing the benefit bar.</figcaption></figure>
+          <p>Every result breaks down into five named factors, and its end point can be checked by hand.</p>
+        </section>
+
+        <section id="confidence">
+          <h2>Making confidence concrete</h2>
+          <p>The inputs are priors, not this patient's measurements. So instead of defending 79%, the team found what the answer depends on most and named the test that settles it.</p>
+          <h3>Ask what dominates the uncertainty</h3>
+          <p>A Sobol analysis over 200,000 simulations showed CNS delivery explains ~91% of the variance for gene reintroduction. Everything else adds up to ~9%.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-sobol.png" alt="Sobol variance decomposition of outcome variance for gene reintroduction and prime editing."><figcaption><b>Figure 4.</b> Delivery dominates for gene reintroduction; for prime editing, on-target editing efficiency dominates instead.</figcaption></figure>
+          <h3>Quantify what a measurement buys</h3>
+          <p>Of the ±11.9-point total spread, measuring CNS delivery removes ±11.4. No other single test comes close.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-voi.jpg" alt="Expected uncertainty resolved per measurement; CNS delivery resolves the most."><figcaption><b>Figure 5.</b> Uncertainty removed by each possible measurement. CNS delivery is the first experiment worth doing.</figcaption></figure>
+          <h3>Corroborate with an independent model</h3>
+          <p>Evo2, a 7-billion-parameter genomic model that knows nothing about the patient, also rated the change disruptive (−1.3479 mutant vs −1.3401 normal). It ranked the variant 7th of 27 possible changes at that spot (~78th percentile).</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-evo2.png" alt="Independent corroboration: Evo2 ranks the patient's variant among the most disruptive changes."><figcaption><b>Figure 6.</b> Evo2 ranks the patient's variant 7th most disruptive of 27, matching the other evidence.</figcaption></figure>
+          <p>Confidence here doesn't mean certainty. It means the model knows where it is weak and what would fix it.</p>
+        </section>
+
+        <section id="interventions">
+          <h2>The interventions the model ranks, and why</h2>
+          <div class="verdicts">
+            <div><b>Gene reintroduction — lead</b><span>Adds a working copy. 41% → 79%. Hinges on delivery (91% of variance); has in-vivo precedent.</span></div>
+            <div><b>Prime editing — backup</b><span>Fixes the exact typo. 14% → 30%. Hinges on editing efficiency (~60%), then delivery (~35%).</span></div>
+            <div><b>Readthrough &amp; HDR — ruled out</b><span>Under ~3.4%. Readthrough fails on full-length yield; HDR fails because non-dividing neurons rarely use that repair route.</span></div>
+          </div>
+        </section>
+
+        <section id="hypotheses">
+          <h2>Hypotheses tested, and alternatives ruled out</h2>
+          <p>Seven hypotheses framed the work, and negative results counted as much as positive ones.</p>
+          <ul>
+            <li><b>Confirmed:</b> NMD clears the mutant mRNA (H1); an NMD-proof copy is the lead (H2); developmental timing limits benefit even though rescue is flat with age (H5); delivery is the master variable at ~91% (H6); the 25% benefit bar is a sharp cutoff, crossed at ~30% of neurons corrected (H7).</li>
+            <li><b>Supported:</b> prime editing as a precise backup, 14% → 30% (H3).</li>
+            <li><b>Ruled out:</b> readthrough and HDR can't reach the bar in non-dividing neurons (H4).</li>
+          </ul>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-timing.jpg" alt="Why timing matters: molecular rescue is flat with age, but phenotypic benefit declines."><figcaption><b>Figure 7.</b> Protein rescue stays near ~79% at all ages, but functional benefit drops from ~74% near age 1 to ~41% by age 45. Earlier is better.</figcaption></figure>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-hypotheses.jpg" alt="Table: each hypothesis in medical terms, the virtual-cell result that tested it, and the decision it drove."><figcaption><b>Figure 8.</b> Each hypothesis, the result that tested it and the decision it led to.</figcaption></figure>
+          <p>Six competing assumptions were also disproved: base editing can't make the needed A→C change; readthrough and HDR stay under 3.4%; on-target efficiency isn't the lead's key lever; the 1.05 multiplier inflated the result; and protein alone doesn't guarantee benefit at every age.</p>
+          <figure class="post-fig glass"><img loading="lazy" src="https://www.aimonehealth.com/images/blog/virtualcell-falsification.jpg" alt="The falsification ledger: assumptions eliminated, corrected, or retained under condition."><figcaption><b>Figure 9.</b> The falsification ledger: red eliminated, amber corrected during iteration, purple kept with a condition.</figcaption></figure>
+        </section>
+
+        <section id="program">
+          <h2>Where the virtual cell becomes a program, not a paper</h2>
+          <p>Two more layers are needed for a treated child. First, a six-discipline review (medical genetics, gene-therapy engineering, pediatric neurology, delivery/vectorology, biostatistics, family navigation). Each adds conditions, such as unproven delivery at scale, monitoring for too much protein, and measuring off-targets. These become the risk register.</p>
+          <p>Second, the Navigator turns the consensus into a family roadmap: a headline, next steps, checkpoints, questions and logistics, drafted as an At-a-Glance card and a Plain-Language Guide.</p>
+          <div class="note-box glass strong" style="margin-top:20px"><span class="ico sm" data-ico="book"></span><p><b style="color:var(--ink)">An honest note on the platform.</b> There's no live "Multidisciplinary" or "Navigator" connector yet. Those layers are agent-simulated, built to the format a real system would accept, so going live means connecting an endpoint, not redoing the science.</p></div>
+        </section>
+
+        <section id="why">
+          <h2>Why this matters</h2>
+          <p>In rare-disease gene therapy, the prep work before experts weigh in eats the field's scarcest time. This cycle helps by:</p>
+          <ul>
+            <li>Replacing debate with simulation: every strategy run on the same cell, ranked with failure reasons.</li>
+            <li>Naming the key lever per approach: delivery for gene reintroduction, editing efficiency for prime editing.</li>
+            <li>Being checkable: it reduces to a hand-checkable model, traces inputs to live databases, is backed by an independent model, and updates when real data arrive.</li>
+            <li>Reaching the family, not just the lab.</li>
+          </ul>
+          <p>AI doesn't decide the therapy. It does the hard routine work reliably, so experts can focus where they matter.</p>
+          <div class="note-box glass strong" style="margin-top:20px"><span class="ico sm" data-ico="shield"></span><p><b style="color:var(--ink)">The honest caveats.</b> Synthetic case. All parameters are priors, so the numbers show the shape of the answer, not a promised result. The panel is agent-based support, not a real team. The Evo2 score is a research signal, not a diagnostic. No real patient data.</p></div>
+          <div class="note-box glass strong"><span class="ico sm" data-ico="book"></span><p><b style="color:var(--ink)">Provenance.</b> AiMOneHealth Science Team. Prepared on the AiMOneHealth rare-disease platform, built on Claude Science. Synthetic practice case SYN-NEXMIF-0001; educational demonstration, not medical advice.</p></div>
+        </section>
+
+        <div class="read-original glass"><p>This mockup shows the article condensed. The original has the complete text, all tables and every figure in full.</p><a class="btn ghost sm inline" href="https://www.aimonehealth.com/blog-from-variant-to-virtual-cell.html">Read the full article ↗</a></div>
+        <div class="statement glass bloom"><p class="big" style="font-size:clamp(22px,2.4vw,28px)">See the loop in action</p><p class="muted read" style="margin:12px auto 0">Try the multidisciplinary clinical simulator, or reach out and we'll walk a case from your gene of interest.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px"><a class="btn primary inline" href="https://multidisciplinary.ai">Try Multidisciplinary ↗</a><a class="btn ghost inline" href="blog.html">Read more posts</a></div></div>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // highlight the section you're reading in the contents list
+  const links = [...document.querySelectorAll('.post-toc a')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.post-body > section').forEach((s) => io.observe(s));
+</script>
+</body>
+</html>

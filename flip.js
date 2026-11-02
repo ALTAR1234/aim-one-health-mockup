@@ -9,8 +9,11 @@
     let from = pageOf(window.navigation?.activation?.from?.url || '');
     if (!from) { try { from = sessionStorage.getItem('aim.from') || ''; } catch {} }
     const here = pageOf(location.href);
-    const fi = ORDER.indexOf(from), ti = ORDER.indexOf(here);
-    if (fi < 0 || ti < 0 || fi === ti) return e.viewTransition.skipTransition();
+    // trainer pages sit just after the Navigator, articles just after the Blog
+    const rank = (p) => (p === 'trainer.html' ? ORDER.indexOf('navigator.html') + 0.5 : /^post-/.test(p) ? ORDER.indexOf('blog.html') + 0.5 : ORDER.indexOf(p));
+    const fi = rank(from), ti = rank(here);
+    if (fi < 0 || ti < 0 || (fi === ti && from === here)) return e.viewTransition.skipTransition();
+    if (fi === ti) return e.viewTransition.types.add('forward'); // e.g. one trainer to another
     e.viewTransition.types.add(ti > fi ? 'forward' : 'back');
   });
 })();
