@@ -64,7 +64,7 @@
   const head = document.createElement('div');
   head.innerHTML = `
     <a class="skip" href="#main">Skip to content</a>
-    <div class="notice"><b>Oncology is our first specialty.</b> More specialties are coming soon. <a href="request.html">Early access is free for the first 50 patients →</a></div>
+    ${here === 'index.html' ? '' : '<!--'}<div class="notice"><b>Oncology is our first specialty.</b> More specialties are coming soon. <a href="request.html">Early access is free for the first 50 patients →</a></div>${here === 'index.html' ? '' : '-->'}
     <header class="site-head"><div class="wrap"><nav class="bar glass" aria-label="Main">
       <button class="icon-btn rail-btn" id="railBtn" aria-label="Show sidebar" aria-expanded="false" aria-controls="rail"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/><path d="M5.5 8h1M5.5 11h1M5.5 14h1"/></svg></button>
       <a class="logo" href="index.html" aria-label="AiM One Health home"><span class="mark"><i></i></span><span><b>AiM One Health</b><small>One Health · One Mission · Every Patient</small></span></a>
@@ -106,11 +106,7 @@
   </div>`;
   document.body.append(foot);
 
-  const note = document.createElement('div');
-  note.className = 'mock-note glass strong';
-  note.innerHTML = '<span><b>Design mockup.</b> Content from aimonehealth.com, new layout. Try the ☀/☾ switch.</span><button aria-label="Hide note">✕</button>';
-  note.querySelector('button').onclick = () => note.remove();
-  document.body.append(note);
+  // (the corner "design mockup" note was removed to keep the screen calm)
 
   // ---------- Daylight / Night ----------
   const flipTheme = () => {

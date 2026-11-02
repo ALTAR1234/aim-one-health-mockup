@@ -101,6 +101,33 @@
   .t-sec, .opt, .trial, .ms .card, .lists .glass, .step-panel { min-width: 0; overflow-wrap: anywhere; }
   .opt .head h3 { min-width: 0; }
   #app { overflow-wrap: anywhere; }
+  /* calm layout */
+  .t-line { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 14.5px; font-weight: 600; color: var(--ink-2); }
+  .ok-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 16%, transparent); }
+  .t-disc { margin-top: 6px; font-size: 13.5px; color: var(--ink-3); }
+  .t-actions { display: grid; gap: 10px; justify-items: end; }
+  .t-nav .n { margin-left: 6px; font-size: 12px; padding: 2px 7px; border-radius: 999px; background: rgb(13 40 70 / .07); color: var(--ink-3); }
+  :root[data-theme='night'] .t-nav .n { background: rgb(255 255 255 / .08); }
+  .t-h3 { margin: 30px 0 12px; font-size: 19px; }
+  .journey-list { list-style: none; counter-reset: j; margin: 0; padding: 0; display: grid; gap: 0; }
+  .journey-list li { counter-increment: j; display: grid; grid-template-columns: 34px 170px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 12px 0; border-top: 1px solid var(--line); }
+  .journey-list li::before { content: counter(j); font: 800 13px/1 var(--font-head); color: var(--accent); }
+  .journey-list b { font-weight: 700; color: var(--ink); }
+  .journey-list span { color: var(--ink-2); }
+  .more-group { margin-top: 22px; display: grid; gap: 4px; }
+  .more-group .lists { margin-top: 4px; }
+  .lists h4 { font-size: 16px; }
+  .t-next { margin-top: 30px; }
+  .steps { padding: 0; }
+  .opt-line { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink-2); text-transform: capitalize; }
+  .opt .more { margin-top: 2px; }
+  .opt .more > summary { font-size: 14px; }
+  .trial-list { display: grid; }
+  .trial-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 18px; align-items: center; padding: 16px 0; border-top: 1px solid var(--line); }
+  .trial-row b { display: block; font-size: 16px; }
+  .trial-row a { font-weight: 700; font-size: 14.5px; white-space: nowrap; }
+  .kv-wide { grid-template-columns: minmax(120px, 220px) minmax(0, 1fr); gap: 10px 20px; }
+  @media (max-width: 640px) { .journey-list li { grid-template-columns: 26px minmax(0, 1fr); } .journey-list li span { grid-column: 2; } .trial-row { grid-template-columns: minmax(0, 1fr) auto; } .trial-row a { grid-column: 1 / -1; } .t-actions { justify-items: start; } }
   @media (max-width: 640px) { .lib a { flex-direction: column; gap: 4px; } .lib a span { max-width: none; } .fit { white-space: normal; } }
   .lib a:hover { color: var(--accent); }
   .help-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
@@ -182,88 +209,63 @@
         <nav class="crumbs" aria-label="Breadcrumb"><a href="navigator.html">Oncology Navigator</a><span>›</span><span>${esc(title(d.category))}</span></nav>
         <div class="t-top" style="margin-top:18px">
           <div>
-            <span class="badge">${esc(title(d.category))}</span>
             <h1>${esc(d.name)}</h1>
             <p class="t-theme">${esc(d.theme)}</p>
-            <div class="t-meta"><span class="badge plain">${esc(d.meta.version)}</span><span class="badge plain">Verified ${esc(d.meta.verified)}</span><span class="badge ok"><span class="dot"></span> Gate passed · ${d.props} properties</span>${d.meta.classification ? `<span class="badge plain std">${esc(d.meta.classification)}</span>` : ''}${d.meta.response ? `<span class="badge plain std">${esc(d.meta.response)}</span>` : ''}</div>
+            <p class="t-line"><span class="ok-dot"></span>Quality gate passed · ${d.props} properties · ${esc(d.meta.version)} · verified ${esc(d.meta.verified)}</p>
+            <p class="t-disc">${esc(d.meta.disclaimer || 'Synthetic patient. Training only. Not medical advice.')}</p>
           </div>
           <div class="t-actions">
-            <div class="viewsw" role="tablist" aria-label="View"><button class="on" data-view="clin" role="tab">Clinician view</button><button data-view="pat" role="tab">Patient &amp; caregiver</button></div>
+            <div class="viewsw" role="tablist" aria-label="View"><button class="on" data-view="clin" role="tab">Clinician</button><button data-view="pat" role="tab">Patient &amp; caregiver</button></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary sm inline" href="https://nav.onconavigator.ai/${esc(d.page)}.html">Open live trainer ↗</a><button class="btn ghost sm inline" id="print">Print</button></div>
           </div>
         </div>
-        <div class="note-box glass strong" style="margin-top:24px"><span class="ico sm" data-ico="shield"></span><p><b style="color:var(--ink)">${esc(d.meta.disclaimer || 'Synthetic patient. Training only. Not medical advice.')}</b> ${esc(d.meta.condition || '')}${d.meta.population ? ` · ${esc(short(d.meta.population, 140))}` : ''}</p></div>
       </div></section>
 
       <div class="wrap">
-        <nav class="t-nav glass strong" id="tnav">
-          <a href="#overview" class="on">Overview</a><a href="#case">Your case</a><a href="#options">Options</a><a href="#road">The road ahead</a><a href="#trials">Trials</a><a href="#safety">Safety &amp; honesty</a><a href="#library">Research library</a>
+        <nav class="t-nav glass strong" id="tnav" role="tablist" aria-label="Trainer sections">
+          <a href="#overview" class="on" role="tab">Overview</a><a href="#case" role="tab">Your case</a><a href="#options" role="tab">Options <span class="n">${Object.values(d.arms).flat().length}</span></a><a href="#road" role="tab">The road ahead</a><a href="#trials" role="tab">Trials <span class="n">${d.trials.length}</span></a><a href="#library" role="tab">Sources <span class="n">${d.refs.length}</span></a>
         </nav>
 
         <section class="t-sec" id="overview">
-          <span class="eyebrow">Overview</span><h2>How this trainer works</h2>
-          <p class="muted read">${esc(d.meta.summary || '')}</p>${d.meta.population && d.meta.population.length > 140 ? `<details class="glass" style="margin-top:14px;padding:0 20px;border-radius:16px"><summary style="padding:14px 0;cursor:pointer;font-weight:700;color:var(--brand)">Who this trainer covers</summary><p class="small muted" style="padding-bottom:16px">${esc(d.meta.population)}</p></details>` : ''}
-          <div class="facts" style="margin-top:18px">
-            <div class="stat glass"><b>${Object.values(d.arms).flat().length}</b><span>Modeled options</span></div>
-            <div class="stat glass"><b>${groups.reduce((n, [, l]) => n + l.length, 0)}</b><span>Case inputs</span></div>
-            <div class="stat glass"><b>${d.trials.length}</b><span>Clinical trials</span></div>
-            <div class="stat glass"><b>${d.refs.length}</b><span>Sources</span></div>
-            <div class="stat glass"><b>${d.honesty.length}</b><span>Honesty rules</span></div>
+          <p class="lead read">${esc(d.meta.summary || '')}</p>
+          <p class="small muted" style="margin-top:12px">${esc(d.meta.condition || '')}${d.meta.classification ? ` · Classified by ${esc(short(d.meta.classification, 90))}` : ''}${d.meta.response ? ` · Response by ${esc(short(d.meta.response, 90))}` : ''}</p>
+          ${d.stages.length ? `<h3 class="t-h3">The decision journey</h3><ol class="journey-list">${d.stages.map((s) => `<li><b>${esc(s.label)}</b><span>${esc(s.question)}</span></li>`).join('')}</ol>` : ''}
+          <div class="more-group">
+            ${d.meta.population && d.meta.population.length > 140 ? `<details class="more"><summary>Who this trainer covers</summary><p class="small muted">${esc(d.meta.population)}</p></details>` : ''}
+            <details class="more"><summary>Rules this trainer never breaks (${d.honesty.length + d.gates.length})</summary>
+              <div class="lists"><div><h4>Honesty rules</h4><ol>${d.honesty.map((h) => `<li>${esc(h)}</li>`).join('')}</ol></div><div><h4>Safety gates</h4><ul>${d.gates.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>${d.care.length ? `<h4 style="margin-top:18px">Where care has to happen</h4><ul>${d.care.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}</div></div>
+            </details>
           </div>
-          ${d.stages.length ? `<h3 style="margin:8px 0 12px">The decision journey</h3><div class="journey">${d.stages.map((s, i) => `<div class="tile glass"><b class="n">Step ${i + 1} · ${esc(s.label)}</b><h3>${esc(s.question)}</h3><p>${esc(s.decision)}</p></div>`).join('')}</div>` : ''}
+          <div class="t-next"><button class="btn primary inline" data-go="case">Describe the case <span class="arrow">→</span></button></div>
         </section>
 
-        <section class="t-sec" id="case">
-          <span class="eyebrow">Your case</span><h2>Describe the synthetic patient</h2>
-          <p class="muted read">Step through the details. As you change them, each option below shows whether it fits this case, using the trainer's own eligibility rules.</p>
+        <section class="t-sec" id="case" hidden>
+          <p class="muted read" style="margin-bottom:18px">Step through the details. Each option shows whether it fits the case, using the trainer's own eligibility rules.</p>
           <div class="wizard">
-            <div class="steps glass" id="steps">${groups.map(([g], i) => `<button data-s="${i}"><i>${i + 1}</i>${esc(g)}</button>`).join('')}</div>
+            <div class="steps" id="steps">${groups.map(([g], i) => `<button data-s="${i}"><i>${i + 1}</i>${esc(g)}</button>`).join('')}</div>
             <div class="step-panel glass bloom" id="panel"></div>
           </div>
         </section>
 
-        <section class="t-sec" id="options">
-          <span class="eyebrow">Options</span><h2>Modeled treatment options</h2>
-          <p class="muted read clin-only">Each option with its guideline status, evidence, burden and teaching-model outcome. The live trainer ranks them for the case; here they're grouped by whether they fit.</p>
-          <p class="muted read pat-only">These are the paths a care team might discuss. “Fits this case” means the details you entered meet that option's basic requirements. It is not a recommendation.</p>
+        <section class="t-sec" id="options" hidden>
+          <p class="muted read clin-only" style="margin-bottom:16px">The live trainer ranks these for the case. Here they're sorted by whether they fit what you entered.</p>
+          <p class="muted read pat-only" style="margin-bottom:16px">Paths a care team might discuss. “Fits” means the details you entered meet that option's basic requirements. It is not a recommendation.</p>
           ${settings.length > 1 ? `<div class="tabs2 chips" id="settings">${settings.map((s) => `<button class="chip${s === setting ? ' on' : ''}" data-set="${esc(s)}">${esc(s)} <span class="n">${d.arms[s].length}</span></button>`).join('')}</div>` : ''}
-          <div class="legend"><span><span class="fit yes">Fits this case</span></span><span><span class="fit maybe">Depends on details not entered</span></span><span><span class="fit no">Doesn't fit this case</span></span></div>
           <div class="opts" id="opts"></div>
         </section>
 
-        <section class="t-sec ms" id="road">
-          <span class="eyebrow">The road ahead</span><h2>Clinical milestones</h2>
-          <p class="muted read">The checkpoints along the way, and what the team reviews at each.</p>
-          <div class="thread">${d.milestones.map((m, i) => `<div class="step"><span class="num">${i + 1}</span><div class="card glass"><span class="when">${esc(m.window || m.id)}</span><h3>${esc(m.title)}</h3>${m.trigger ? `<p>${esc(m.trigger)}</p>` : ''}${m.review.length ? `<ul>${m.review.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>` : ''}</div></div>`).join('') || '<p class="muted">No milestones in this trainer.</p>'}</div>
-          ${d.surveillance.length ? `<h3 style="margin:26px 0 12px">Follow-up schedule</h3><div class="help-row">${d.surveillance.map((s) => `<div class="tile glass"><h3 style="font-size:17px">${esc(s.phase)}</h3><p>${esc(s.cadence)}</p></div>`).join('')}</div>` : ''}
+        <section class="t-sec ms" id="road" hidden>
+          <div class="thread">${d.milestones.map((m, i) => `<div class="step"><span class="num">${i + 1}</span><div class="card glass"><span class="when">${esc(m.window || m.id)}</span><h3>${esc(m.title)}</h3>${m.trigger ? `<p>${esc(m.trigger)}</p>` : ''}${m.review.length ? `<details class="more"><summary>What the team reviews</summary><ul>${m.review.map((r) => `<li>${esc(r)}</li>`).join('')}</ul></details>` : ''}</div></div>`).join('') || '<p class="muted">No milestones in this trainer.</p>'}</div>
+          ${d.surveillance.length ? `<h3 class="t-h3">Follow-up schedule</h3><dl class="kv kv-wide">${d.surveillance.map((s) => `<dt>${esc(s.phase)}</dt><dd>${esc(s.cadence)}</dd>`).join('')}</dl>` : ''}
         </section>
 
-        <section class="t-sec" id="trials">
-          <span class="eyebrow">Clinical trials</span><h2>Trials this trainer tracks</h2>
-          <div class="trials">${d.trials.map((t) => `<div class="trial glass"><div style="display:flex;gap:8px;flex-wrap:wrap">${t.phase ? `<span class="badge plain">Phase ${esc(t.phase)}</span>` : ''}<span class="badge ${t.closed ? 'warm' : 'ok'}">${t.closed ? 'Closed' : esc(t.status || 'Open')}</span></div><h3>${esc(t.name)}</h3>${t.setting ? `<p class="small muted">Setting: ${esc(pretty(t.setting))}</p>` : ''}${t.nct ? `<a href="https://clinicaltrials.gov/study/${esc(t.nct)}">${esc(t.nct)} ↗</a>` : ''}</div>`).join('') || '<p class="muted">No trials listed.</p>'}</div>
+        <section class="t-sec" id="trials" hidden>
+          <div class="trial-list">${d.trials.map((t) => `<div class="trial-row"><div><b>${esc(t.name)}</b><span class="small muted">${[t.phase ? 'Phase ' + esc(t.phase) : '', t.setting ? esc(pretty(t.setting)) : ''].filter(Boolean).join(' · ')}</span></div><span class="fit ${t.closed ? 'no' : 'yes'}">${t.closed ? 'Closed' : esc(short(t.status || 'Open', 24))}</span>${t.nct ? `<a href="https://clinicaltrials.gov/study/${esc(t.nct)}">${esc(t.nct)} ↗</a>` : '<span></span>'}</div>`).join('') || '<p class="muted">No trials listed.</p>'}</div>
         </section>
 
-        <section class="t-sec" id="safety">
-          <span class="eyebrow">Safety &amp; honesty</span><h2>The rules this trainer never breaks</h2>
-          <div class="lists">
-            <div class="glass"><h3>Honesty rules</h3><ol>${d.honesty.map((h) => `<li>${esc(h)}</li>`).join('')}</ol></div>
-            <div class="glass"><h3>Safety gates</h3><ul class="checks" style="padding:0">${d.gates.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>${d.care.length ? `<h3 style="margin-top:22px">Where care has to happen</h3><ul>${d.care.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}</div>
-          </div>
-        </section>
-
-        <section class="t-sec" id="library">
-          <span class="eyebrow">Research library</span><h2>Every source in this trainer</h2>
+        <section class="t-sec" id="library" hidden>
           <div class="lib-tools"><label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input class="input" id="libq" placeholder="Search ${d.refs.length} sources" aria-label="Search sources"></label><div class="chips" id="libg"></div></div>
           <div class="lib" id="lib"></div>
-        </section>
-
-        <section class="t-sec">
-          <div class="help-row">
-            <a class="tile glass lift" href="request.html" style="text-decoration:none"><span class="ico" data-ico="stethoscope"></span><h3>Nurse navigator</h3><p>Talk the case through with a specialty nurse.</p></a>
-            <a class="tile glass lift" href="research.html" style="text-decoration:none"><span class="ico" data-ico="flask"></span><h3>Tele-research</h3><p>Explore in-silico research cases.</p></a>
-            <a class="tile glass lift" href="https://www.cancer.gov" style="text-decoration:none"><span class="ico" data-ico="heart"></span><h3>Advocacy groups</h3><p>Patient organizations and support.</p></a>
-            <button class="tile glass lift" id="print" style="border:0;cursor:pointer;text-align:left;font:inherit;color:inherit"><span class="ico" data-ico="download"></span><h3>Print or save as PDF</h3><p>A copy of this trainer's summary.</p></button>
-          </div>
-          <div class="read-original glass" style="margin-top:20px"><p>This is the redesigned trainer in the mockup. The live trainer runs the full ranking engine, prognosis model and 1-minute debrief.</p><a class="btn primary sm inline" href="https://nav.onconavigator.ai/${esc(d.page)}.html">Open the live trainer ↗</a></div>
         </section>
       </div>`;
     document.querySelectorAll('#app [data-ico]').forEach((el) => (el.innerHTML = window.aimIcon(el.dataset.ico)));
@@ -302,7 +304,7 @@
       panel.querySelectorAll('select[data-f]').forEach((s) => (s.onchange = () => { vals[s.dataset.f] = s.value; drawOpts(); }));
       panel.querySelectorAll('.seg button').forEach((b) => (b.onclick = () => { vals[b.dataset.f] = b.dataset.v; b.parentElement.querySelectorAll('button').forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', String(x === b)); }); drawOpts(); }));
       document.getElementById('prev').onclick = () => { step = Math.max(0, step - 1); drawStep(); };
-      document.getElementById('nextb').onclick = () => { if (step < groups.length - 1) { step++; drawStep(); } else document.getElementById('options').scrollIntoView({ behavior: 'smooth' }); };
+      document.getElementById('nextb').onclick = () => { if (step < groups.length - 1) { step++; drawStep(); } else showTab('options'); };
     };
     app.querySelectorAll('#steps button').forEach((b) => (b.onclick = () => { step = Number(b.dataset.s); drawStep(); }));
 
@@ -312,18 +314,19 @@
       list.sort((x, y) => (y.fit === true) - (x.fit === true) || (x.fit === false) - (y.fit === false));
       document.getElementById('opts').innerHTML = list.map(({ a, fit }) => `
         <article class="opt glass${fit === false ? ' no' : ''}">
-          <div class="head"><h3>${esc(a.name)}</h3><span class="fit ${fit === true ? 'yes' : fit === false ? 'no' : 'maybe'}">${fit === true ? 'Fits this case' : fit === false ? "Doesn't fit" : 'Depends'}</span></div>
+          <div class="head"><h3>${esc(a.name)}</h3><span class="fit ${fit === true ? 'yes' : fit === false ? 'no' : 'maybe'}">${fit === true ? 'Fits' : fit === false ? "Doesn't fit" : 'Depends'}</span></div>
+          <p class="opt-line">${a.intent ? `<span>${esc(pretty(a.intent))}</span>` : ''}${a.burden != null ? `<span>Burden <span class="burden" aria-label="Burden ${a.burden} of 5">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= a.burden ? 'on' : ''}"></i>`).join('')}</span></span>` : ''}</p>
           ${a.patient ? `<p class="small muted pat-only">${esc(a.patient)}</p>` : ''}
-          <dl class="kv">
-            ${a.intent ? `<dt>Goal</dt><dd>${esc(pretty(a.intent))}</dd>` : ''}
-            ${a.guideline ? `<dt class="clin-only">Guideline</dt><dd class="clin-only">${esc(a.guideline)}</dd>` : ''}
-            ${a.evidence ? `<dt class="clin-only">Evidence</dt><dd class="clin-only">${esc(a.evidence)}</dd>` : ''}
-            ${a.burden != null ? `<dt>Burden</dt><dd><span class="burden" aria-label="Burden ${a.burden} of 5">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= a.burden ? 'on' : ''}"></i>`).join('')}</span></dd>` : ''}
-            ${a.toxicity ? `<dt>Side effects</dt><dd>${esc(a.toxicity)}</dd>` : ''}
-          </dl>
-          ${a.outcome && a.outcome.value != null ? `<div class="outcome clin-only"><b>${esc(pretty(a.outcome.type || 'outcome'))}:</b> ${esc(a.outcome.value)} <span class="tiny">· teaching model</span></div>` : ''}
-          ${a.drugs.length ? `<div class="drugs">${a.drugs.map((x) => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
-          ${a.eligibility && a.eligibility !== 'true' ? `<p class="rule clin-only">Requires: ${esc(a.eligibility)}</p>` : ''}
+          <details class="more"><summary>Details</summary>
+            <dl class="kv">
+              ${a.guideline ? `<dt>Guideline</dt><dd>${esc(a.guideline)}</dd>` : ''}
+              ${a.evidence ? `<dt>Evidence</dt><dd>${esc(a.evidence)}</dd>` : ''}
+              ${a.toxicity ? `<dt>Side effects</dt><dd>${esc(a.toxicity)}</dd>` : ''}
+              ${a.outcome && a.outcome.value != null ? `<dt>${esc(pretty(a.outcome.type || 'outcome'))}</dt><dd>${esc(a.outcome.value)} <span class="tiny">· teaching model</span></dd>` : ''}
+              ${a.drugs.length ? `<dt>Treatments</dt><dd>${a.drugs.map((x) => esc(x)).join(', ')}</dd>` : ''}
+              ${a.eligibility && a.eligibility !== 'true' ? `<dt>Requires</dt><dd class="rule">${esc(a.eligibility)}</dd>` : ''}
+            </dl>
+          </details>
         </article>`).join('');
     };
     const st = document.getElementById('settings');
@@ -343,10 +346,19 @@
     document.getElementById('libq').oninput = drawLib;
     document.getElementById('print').onclick = () => print();
 
-    // section nav follows the scroll
+    // tabs: one section at a time instead of one long scroll
     const navLinks = [...document.querySelectorAll('#tnav a')];
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) navLinks.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-30% 0px -60% 0px' });
-    document.querySelectorAll('.t-sec[id]').forEach((s) => io.observe(s));
+    function showTab(id) {
+      document.querySelectorAll('.t-sec[id]').forEach((s) => (s.hidden = s.id !== id));
+      navLinks.forEach((a) => { const on = a.getAttribute('href') === '#' + id; a.classList.toggle('on', on); a.setAttribute('aria-selected', String(on)); });
+      history.replaceState(null, '', '#' + id);
+      const nav = document.getElementById('tnav');
+      if (nav.getBoundingClientRect().top < 0 || scrollY > nav.offsetTop) scrollTo({ top: nav.offsetTop - 100, behavior: 'smooth' });
+    }
+    navLinks.forEach((a) => (a.onclick = (e) => { e.preventDefault(); showTab(a.getAttribute('href').slice(1)); }));
+    app.querySelectorAll('[data-go]').forEach((b) => (b.onclick = () => showTab(b.dataset.go)));
+    const startTab = location.hash.slice(1);
+    if (startTab && document.getElementById(startTab)?.classList.contains('t-sec')) showTab(startTab);
 
     drawStep();
     drawOpts();

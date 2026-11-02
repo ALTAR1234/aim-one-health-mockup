@@ -72,7 +72,17 @@
   .final { padding: clamp(36px, 6vw, 80px); border-radius: 40px; text-align: center; }
   .final h2 { max-width: 18ch; margin: 16px auto 18px; }
   .final .ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); position: relative; }
+  .phases::before { content: ''; position: absolute; left: 0; right: 0; top: 7px; height: 3px; border-radius: 3px; background: var(--thread-x); opacity: .7; }
+  .phase-col .phase { position: relative; display: inline-block; padding-right: 12px; margin: 0 0 14px; background: var(--page); }
+  .phase-col ol { list-style: none; margin: 0; padding: 0; display: grid; }
+  .phase-col li { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 10px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .phase-col .pn { font: 800 14px/1.5 var(--font-head); color: var(--accent); }
+  .phase-col b { display: block; font: 700 17px/1.35 var(--font-head); color: var(--brand); }
+  .phase-col li span:not(.pn) { display: block; margin-top: 4px; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .phase-col li.key b { color: var(--accent); }
   @media (max-width: 980px) {
+    .phases { grid-template-columns: 1fr; } .phases::before { display: none; }
     .doubling { grid-template-columns: 1fr; }
     .preview { transform: none; }
     .float-chip { display: none; }
@@ -113,8 +123,6 @@
           <div class="meter"><div class="row"><span>Confidence</span><span style="color:var(--ok)">High</span></div><div class="track"><div class="fill"></div></div></div>
           <div class="pv-foot"><span class="badge plain">3 alternatives considered</span><span class="badge plain">2 open questions</span></div>
         </div>
-        <div class="float-chip glass strong a"><span class="ico sm" data-ico="stethoscope"></span>Nurse navigator assigned</div>
-        <div class="float-chip glass strong b"><span class="ico sm" data-ico="book"></span>42 sources cited</div>
       </div>
     </div>
   </section>
@@ -181,8 +189,8 @@
         <div class="stack">
           <h3 style="font-size:26px">Finding information isn't the problem anymore. Knowing which of it matters is.</h3>
           <p class="muted">Every day brings new research, clinical guidance, real-world evidence and patient data. The hard part is applying the right knowledge at the right time, for each patient.</p>
-          <p class="muted">AiM One Health uses <b style="color:var(--ink)">machine teaching</b>: systems that learn from clinicians' expertise and reasoning, medical evidence, patient experience and real-world outcomes, then apply what they've learned to the decision in front of a patient.</p>
-          <p class="muted">We bring together multidisciplinary expertise, clinical evidence, human judgment, patient navigation, advanced simulation and machine teaching, so patients and care teams can understand their options, find their way through the system, and decide faster and with more confidence.</p>
+          <details class="more"><summary>How machine teaching works</summary><p class="muted">AiM One Health uses <b style="color:var(--ink)">machine teaching</b>: systems that learn from clinicians' expertise and reasoning, medical evidence, patient experience and real-world outcomes, then apply what they've learned to the decision in front of a patient.</p>
+          <p class="muted">We bring together multidisciplinary expertise, clinical evidence, human judgment, patient navigation, advanced simulation and machine teaching, so patients and care teams can understand their options, find their way through the system, and decide faster and with more confidence.</p></details>
         </div>
       </div>
     </div>
@@ -196,19 +204,7 @@
         <h2>From the world's knowledge to this patient's outcome</h2>
         <p class="lead">Knowledge only matters when it reaches the person it could help. Each link makes the next one possible.</p>
       </div>
-      <div class="thread">
-        <p class="phase reveal">Knowledge</p>
-        <div class="step reveal"><span class="num">01</span><div class="card glass"><h3>New medical knowledge, every day</h3><p>Research, clinical guidance, real-world evidence, patient information and healthcare data.</p></div></div>
-        <div class="step reveal"><span class="num">02</span><div class="card glass"><h3>Machine teaching makes sense of it</h3><p>It learns from human expertise, clinical reasoning, evidence, patient experience and outcomes.</p></div></div>
-        <p class="phase reveal">Connection</p>
-        <div class="step reveal"><span class="num">03</span><div class="card glass"><h3>The right evidence meets the right patient</h3><p>The right knowledge, at the right time, for this case.</p></div></div>
-        <div class="step reveal"><span class="num">04</span><div class="card glass"><h3>Multidisciplinary expertise</h3><p>Specialist-level review, without institutional boundaries.</p></div></div>
-        <div class="step reveal"><span class="num">05</span><div class="card glass"><h3>Your options, explained</h3><p>What the choices actually are, and what each one means for you.</p></div></div>
-        <p class="phase reveal">Outcome</p>
-        <div class="step reveal"><span class="num">06</span><div class="card glass"><h3>Fast, reliable decisions</h3><p>Made with confidence, with the reasoning visible behind them.</p></div></div>
-        <div class="step reveal"><span class="num">07</span><div class="card glass"><h3>Navigation to the right care</h3><p>Coordinated guidance through a system that's hard to navigate alone.</p></div></div>
-        <div class="step key reveal"><span class="num">08</span><div class="card glass bloom"><h3>Better care, better health outcomes</h3><p>The whole chain exists for this step.</p></div></div>
-      </div>
+      <div class="phases"><div class="phase-col reveal"><p class="phase">Knowledge</p><ol><li><span class="pn">01</span><div><b>New medical knowledge, every day</b><span>Research, guidance, real-world evidence, patient information and data.</span></div></li><li><span class="pn">02</span><div><b>Machine teaching makes sense of it</b><span>Learning from expertise, reasoning, evidence, experience and outcomes.</span></div></li></ol></div><div class="phase-col reveal"><p class="phase">Connection</p><ol><li><span class="pn">03</span><div><b>The right evidence meets the right patient</b><span>The right knowledge, at the right time, for this case.</span></div></li><li><span class="pn">04</span><div><b>Multidisciplinary expertise</b><span>Specialist-level review, without institutional boundaries.</span></div></li><li><span class="pn">05</span><div><b>Your options, explained</b><span>What the choices are, and what each means for you.</span></div></li></ol></div><div class="phase-col reveal"><p class="phase">Outcome</p><ol><li><span class="pn">06</span><div><b>Fast, reliable decisions</b><span>Made with confidence, with the reasoning visible.</span></div></li><li><span class="pn">07</span><div><b>Navigation to the right care</b><span>Coordinated guidance through a hard system.</span></div></li><li class="key"><span class="pn">08</span><div><b>Better care, better health outcomes</b><span>The whole chain exists for this step.</span></div></li></ol></div></div>
     </div>
   </section>
 
@@ -219,7 +215,7 @@
         <span class="eyebrow">Guiding principle</span>
         <p class="big" style="margin-top:18px">AI should <span class="grad">amplify</span> human expertise, not replace it.</p>
         <p class="lead read" style="margin:18px auto 0">Technology can search, summarize, challenge and keep learning. It can't replace judgment. So we bring three kinds of people together around one patient.</p>
-        <p class="muted read" style="margin:14px auto 0">That's how we keep up with the medical knowledge created every day: information that would otherwise stay scattered or overwhelming becomes usable guidance behind a timely, reliable decision for one patient.</p>
+        <details class="more" style="margin:16px auto 0;max-width:64ch"><summary>Read more</summary><p class="muted read">That's how we keep up with the medical knowledge created every day: information that would otherwise stay scattered or overwhelming becomes usable guidance behind a timely, reliable decision for one patient.</p></details>
       </div>
       <div class="grid g3 roles">
         <article class="tile glass lift reveal"><span class="ico" data-ico="stethoscope"></span><h3>Clinicians</h3><p>Bring judgment, and teach the system through their expertise, decisions and feedback.</p></article>

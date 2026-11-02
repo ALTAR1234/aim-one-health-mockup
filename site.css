@@ -481,6 +481,53 @@ html:active-view-transition-type(back)::view-transition-new(root) { animation: v
 }
 /* grid and split children may shrink below their content's natural width (long words, big numbers) */
 .grid > *, .split > *, .g2 > *, .g3 > *, .g4 > * { min-width: 0; }
+/* ---------- calm layer: fewer boxes ----------
+   Glass is kept for what matters (navigation, the hero, key cards, forms, dialogs, calls to action and
+   trainer options). Supporting content (feature lists, stats, steps, papers, figures, notes) sits
+   straight on the page, separated by thin lines instead of boxes. */
+:root { --line: rgb(13 40 70 / .11); }
+:root[data-theme='night'] { --line: rgb(255 255 255 / .1); }
+.tile.glass, .stat.glass, .paper.glass, .teaser.glass, .thread .card.glass, .stage-card.glass, .loop-step.glass, .trial.glass,
+.lists > .glass, details.glass, .statement.glass, .in-short.glass, .read-original.glass, .post-fig.glass, .post-table.glass,
+.note-box.glass, .pull.glass, .part.glass, .warn.glass, .decision.glass, .propose.glass, .stats .stat, .facts .stat, .empty.glass {
+  background: none !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-radius: 0 !important; }
+:is(.tile, .stat, .paper, .teaser, .thread .card, .stage-card, .loop-step, .trial, .lists > div, details, .statement, .in-short, .read-original, .post-fig, .post-table, .note-box, .pull, .part, .warn, .decision, .propose).glass::before,
+:is(.tile, .stat, .paper, .teaser, .thread .card, .stage-card, .loop-step, .trial, .lists > div, details, .statement, .in-short, .read-original, .post-fig, .post-table, .note-box, .pull, .part, .warn, .decision, .propose).glass::after { display: none !important; }
+:is(.tile, .paper, .teaser, .stage-card, .trial).lift:hover { transform: none; box-shadow: none !important; }
+/* open rows with a hairline on top */
+.grid > .tile.glass, .paper.glass, .teaser.glass, .trial.glass, .stage-card.glass, .loop-step.glass, .help-row > .tile.glass, .journey > .tile.glass { padding: 22px 0 6px !important; border-top: 1px solid var(--line); }
+.stat.glass, .facts .stat { padding: 0 !important; }
+.stats, .facts { gap: 26px 20px !important; }
+.thread .card.glass { padding: 12px 0 6px !important; }
+details.glass { padding: 0 !important; border-top: 1px solid var(--line); }
+details.glass + details.glass { margin-top: 0 !important; }
+.statement.glass { padding: clamp(18px, 3vw, 34px) 0 !important; }
+.in-short.glass { padding: 4px 0 4px 18px !important; border-left: 3px solid var(--accent) !important; }
+.note-box.glass, .warn.glass { padding: 0 !important; font-size: 14.5px; }
+.read-original.glass, .decision.glass, .propose.glass { padding: 18px 0 !important; border-top: 1px solid var(--line); }
+.post-fig.glass img { border-radius: 18px; }
+.post-fig.glass figcaption { padding: 10px 2px 0; }
+.post-table.glass { padding: 0 !important; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pull.glass { padding: 4px 0 4px 20px !important; }
+.part.glass { padding: 28px 0 !important; border-top: 1px solid var(--line); }
+.lists > .glass { padding: 0 !important; }
+/* tighter rhythm between sections so pages are shorter */
+section { padding: clamp(44px, 6vw, 84px) 0; }
+.sec-head { margin-bottom: clamp(22px, 3vw, 36px); }
+.sec-head h2 { margin: 10px 0 12px; }
+/* softer background light, no dot pattern */
+:root { --field-opacity: .34; }
+:root[data-theme='night'] { --field-opacity: .2; }
+.fields::after { display: none; }
+/* "Read more": secondary paragraphs fold away so pages skim fast */
+details.more { margin-top: 14px; }
+details.more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: 700 15px/1 var(--font-body); color: var(--accent); }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: '↓'; transition: transform .25s; }
+details.more[open] > summary::after { transform: rotate(180deg); }
+details.more[open] > summary { margin-bottom: 12px; }
+details.more > :not(summary) + :not(summary) { margin-top: 12px; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }
