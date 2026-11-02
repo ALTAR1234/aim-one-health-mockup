@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Research · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+<style>
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .hero-stats .stat { padding: 18px 24px; border-radius: 20px; min-width: 150px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .filters .search { flex: 1; min-width: 260px; max-width: 460px; }
+  .case { display: grid; grid-template-columns: 1.1fr .9fr; gap: 0; border-radius: 32px; overflow: hidden; }
+  .case .info { padding: clamp(26px, 3.4vw, 42px); display: flex; flex-direction: column; gap: 16px; }
+  .case .id { font: 600 14px/1 ui-monospace, 'Cascadia Mono', Consolas, monospace; color: var(--ink-3); letter-spacing: .04em; }
+  .case h3 { font-size: clamp(26px, 2.6vw, 32px); }
+  .views { display: grid; gap: 8px; margin-top: 4px; }
+  .views div { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; font-weight: 600; font-size: 15.5px; color: var(--ink); background: var(--glass-strong); box-shadow: inset 0 0 0 1px var(--glass-edge-2); }
+  .views div span { font: 800 13px/1 var(--font-head); color: var(--accent); width: 20px; }
+  /* the twin: an abstract cell rendered in CSS, no stock imagery */
+  .twin { position: relative; min-height: 360px; display: grid; place-items: center; overflow: hidden; background: radial-gradient(80% 70% at 50% 45%, rgb(25 179 176 / .22), transparent 70%), linear-gradient(160deg, #0b2e59, #06182f); }
+  .cell { position: relative; width: 230px; height: 230px; border-radius: 46% 54% 51% 49% / 52% 45% 55% 48%; background: radial-gradient(circle at 38% 34%, rgb(255 255 255 / .28), transparent 40%), radial-gradient(circle at 50% 55%, rgb(126 240 226 / .35), rgb(59 124 240 / .25) 60%, transparent 72%);
+    box-shadow: inset 0 0 0 2px rgb(126 240 226 / .5), 0 0 60px rgb(59 180 240 / .35); animation: morph 12s ease-in-out infinite alternate; }
+  .cell::before { content: ''; position: absolute; left: 34%; top: 30%; width: 36%; height: 36%; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c5b4ff, #6a4fd0); box-shadow: 0 0 30px rgb(160 120 255 / .6); }
+  @keyframes morph { to { border-radius: 54% 46% 45% 55% / 46% 56% 44% 54%; transform: rotate(12deg) scale(1.04); } }
+  .orbit { position: absolute; width: 330px; height: 330px; border-radius: 50%; border: 1px dashed rgb(126 240 226 / .35); animation: spin 40s linear infinite; }
+  .orbit i { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #7ef0e2; box-shadow: 0 0 14px #7ef0e2; }
+  .orbit i:nth-child(1) { left: 50%; top: -7px; } .orbit i:nth-child(2) { right: 10px; bottom: 60px; background: #ffc9a8; box-shadow: 0 0 14px #ffc9a8; } .orbit i:nth-child(3) { left: 20px; bottom: 80px; background: #8db4ff; box-shadow: 0 0 14px #8db4ff; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .twin .tag { position: absolute; left: 18px; bottom: 18px; padding: 8px 14px; border-radius: 999px; font: 700 12.5px/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: #dff; background: rgb(255 255 255 / .1); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .2); }
+  .propose { display: flex; gap: 22px; align-items: center; padding: 28px; border-radius: 26px; }
+  .propose .txt { flex: 1; }
+  .access .tile { position: relative; padding-top: 30px; }
+  .access .n { position: absolute; right: 22px; top: 18px; font: 800 44px/1 var(--font-head); color: color-mix(in srgb, var(--accent) 22%, transparent); }
+  @media (max-width: 980px) { .case { grid-template-columns: 1fr; } .twin { min-height: 280px; order: -1; } .propose { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body data-page="research.html">
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><span>Open Research</span></nav>
+      <span class="badge" style="margin-top:20px">Precision computational twin</span>
+      <h1>Open Research Projects</h1>
+      <p class="lead read">In-silico patient case studies built for collaborative research. Explore how a treatment works across biology, immunology and evidence, one transparent model at a time.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px"><a class="btn primary inline" href="#cases">Browse cases <span class="arrow">→</span></a><a class="btn ghost inline" href="#access">How access works</a></div>
+      <div class="hero-stats">
+        <div class="stat glass"><b>1</b><span>Research case</span></div>
+        <div class="stat glass"><b>1</b><span>Public</span></div>
+        <div class="stat glass"><b>0</b><span>Invitation only</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Available cases</span><h2>Explore a twin</h2></div>
+      <div class="filters">
+        <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input class="input" placeholder="Search by condition, therapy or case ID" aria-label="Search cases"></label>
+        <div class="chips"><button class="chip on">All <span class="n">1</span></button><button class="chip">Public <span class="n">1</span></button><button class="chip">Invitation only <span class="n">0</span></button></div>
+      </div>
+
+      <article class="case glass bloom reveal">
+        <div class="info">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><span class="badge ok"><span class="dot"></span> Public</span><span class="id">AOH-7K9X-M4Q2</span></div>
+          <span class="eyebrow">Glioblastoma (GBM)</span>
+          <h3>Glioblastoma · DCVax-L &amp; combination therapy</h3>
+          <p class="muted">A precision computational twin that walks one patient case from tumor-cell biology through immune recognition, treatment mechanisms and resistance, to the supporting evidence.</p>
+          <p class="small" style="font-weight:700;color:var(--ink)">5 case views</p>
+          <div class="views">
+            <div><span>1</span>Inside a GBM cell</div>
+            <div><span>2</span>Immune recognition</div>
+            <div><span>3</span>Treatment mechanisms</div>
+            <div><span>4</span>Barriers and resistance</div>
+            <div><span>5</span>Patient evidence</div>
+          </div>
+          <div style="margin-top:6px"><a class="btn primary inline" href="https://openrx.aimonehealth.com">Open case <span class="arrow">→</span></a></div>
+        </div>
+        <div class="twin" aria-hidden="true"><div class="orbit"><i></i><i></i><i></i></div><div class="cell"></div><span class="tag">Dendritic-cell vaccine + combination</span></div>
+      </article>
+
+      <div class="propose glass reveal" style="margin-top:20px">
+        <span class="ico" data-ico="plus"></span>
+        <div class="txt"><h3>Propose a case</h3><p class="muted">Have a case that would benefit from an in-silico twin? Tell the research team.</p></div>
+        <a class="btn ghost inline" href="mailto:info@aimonehealth.com">Submit a proposal <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="access" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">How access works</span><h2>Three steps to explore</h2><p class="lead read">Public cases open immediately. Invitation-only cases are shared with named collaborators.</p></div>
+      <div class="grid g3 access">
+        <article class="tile glass lift reveal"><span class="n">1</span><span class="ico" data-ico="search"></span><h3>Choose a case</h3><p>Browse the catalogue. Each case shows whether it's public or invitation only.</p></article>
+        <article class="tile glass lift reveal"><span class="n">2</span><span class="ico" data-ico="lock"></span><h3>Enter your passcode</h3><p>Invitation-only cases ask for the passcode the research team shared with you.</p></article>
+        <article class="tile glass lift reveal"><span class="n">3</span><span class="ico" data-ico="dna"></span><h3>Explore the twin</h3><p>Work through the case views: biology, mechanisms, resistance and evidence.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+</body>
+</html>

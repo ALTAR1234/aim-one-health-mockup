@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample report · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+<style>
+  .warn { display: flex; gap: 14px; align-items: flex-start; padding: 16px 20px; border-radius: 18px; margin-top: 26px; }
+  .warn .ico { color: var(--warm); background: color-mix(in srgb, var(--warm) 12%, transparent); box-shadow: none; }
+  .warn p { font-size: 15.5px; color: var(--ink-2); }
+  .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; align-items: start; }
+  .layout > * { min-width: 0; }
+  .toc { position: sticky; top: 100px; padding: 22px; border-radius: 24px; }
+  .toc h4 { font: 700 12.5px/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+  .toc a { display: flex; gap: 10px; padding: 10px 12px; border-radius: 12px; font-size: 15px; font-weight: 600; color: var(--ink-2); text-decoration: none; transition: background .2s, color .2s; }
+  .toc a span { font: 800 12px/1.6 var(--font-head); color: var(--accent); width: 18px; flex: none; }
+  .toc a:hover, .toc a.on { background: var(--glass-strong); color: var(--brand); box-shadow: inset 0 0 0 1px var(--glass-edge-2); }
+  .doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .part { padding: clamp(20px, 3vw, 36px); border-radius: 26px; scroll-margin-top: 100px; min-width: 0; overflow-wrap: anywhere; }
+  .part > .eyebrow { margin-bottom: 12px; }
+  .part h2 { font-size: clamp(24px, 2.4vw, 30px); margin-bottom: 14px; }
+  .part p + p { margin-top: 12px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+  .meta-grid div { padding: 14px 16px; border-radius: 14px; background: var(--glass-strong); box-shadow: inset 0 0 0 1px var(--glass-edge-2); }
+  .meta-grid b { display: block; font: 700 12.5px/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .meta-grid span { font-weight: 600; color: var(--ink); font-size: 15.5px; }
+  .case-box { padding: 18px 20px; border-radius: 16px; border-left: 4px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .ev { display: grid; gap: 12px; }
+  .ev div { padding: 18px 20px; border-radius: 16px; background: var(--glass-strong); box-shadow: inset 0 0 0 1px var(--glass-edge-2); }
+  .ev .badge { margin-bottom: 8px; }
+  .ev p { color: var(--ink-2); font-size: 16.5px; }
+  .challenge { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .challenge div { padding: 18px 20px; border-radius: 16px; }
+  .challenge .q { background: color-mix(in srgb, var(--warm) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warm) 25%, transparent); }
+  .challenge .a { background: color-mix(in srgb, var(--ok) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok) 25%, transparent); }
+  .challenge b { display: block; font: 700 12.5px/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+  .challenge .q b { color: var(--warm); } .challenge .a b { color: var(--ok); }
+  .conf { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; }
+  .ring { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#19b3b0, #3b7cf0 302deg, rgb(13 40 70 / .08) 0); }
+  .ring span { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; font: 800 20px/1 var(--font-head); color: var(--ok); background: var(--page); }
+  .locked { display: flex; gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; background: rgb(13 40 70 / .04); color: var(--ink-2); font-size: 15.5px; }
+  :root[data-theme='night'] .locked { background: rgb(255 255 255 / .04); }
+  @media (max-width: 980px) { .layout { grid-template-columns: minmax(0, 1fr); } .toc { position: static; } .meta-grid, .challenge { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="report.html">
+<main id="main">
+  <section class="page-hero" style="padding-bottom:28px">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><a href="tools.html">Tools</a><span>›</span><span>Sample report</span></nav>
+      <span class="badge warm" style="margin-top:20px"><span class="dot"></span> Synthetic data · Demonstration only</span>
+      <h1>Oncology Tumor Board Intelligence Report</h1>
+      <p class="lead read">See exactly what you'd receive: complex clinical questions turned into transparent, evidence-backed guidance.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a class="btn primary inline" href="request.html">Start a similar request <span class="arrow">→</span></a><a class="btn ghost inline" href="#">Download sample (PDF)</a></div>
+      <div class="warn glass strong"><span class="ico sm" data-ico="shield"></span><p>This report is a product demonstration using synthetic or de-identified information. It is not medical advice and must not be used to diagnose or treat any individual patient.</p></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap layout">
+      <aside class="toc glass strong" aria-label="Report contents">
+        <h4>Contents</h4>
+        <a href="#cover" class="on"><span>00</span>Case &amp; question</a>
+        <a href="#summary"><span>01</span>Executive summary</a>
+        <a href="#evidence"><span>02</span>Evidence synthesis</a>
+        <a href="#deliberation"><span>03</span>Deliberation</a>
+        <a href="#redteam"><span>04</span>Red-team challenge</a>
+        <a href="#trials"><span>05</span>Trial matching</a>
+        <a href="#confidence"><span>06</span>Confidence</a>
+      </aside>
+
+      <div class="doc">
+        <article class="part glass bloom" id="cover">
+          <span class="eyebrow">Cover</span>
+          <h2>The case and the question</h2>
+          <div class="meta-grid"><div><b>Specialty</b><span>Medical oncology</span></div><div><b>Request type</b><span>Tumor board preparation</span></div><div><b>Audience</b><span>Treating oncologist &amp; tumor board</span></div></div>
+          <div class="case-box"><p><b>Case:</b> 58-year-old (synthetic) with metastatic non-small cell lung cancer, adenocarcinoma, EGFR exon 19 deletion, PD-L1 TPS 40%.</p><p><b>Question:</b> Evaluate evidence-supported first-line options and sequencing.</p></div>
+          <div class="chips" style="margin-top:18px"><span class="badge plain">Evidence synthesis</span><span class="badge plain">Guideline concordance</span><span class="badge plain">Specialist deliberation</span><span class="badge plain">Red-team challenge</span><span class="badge plain">Trial matching</span><span class="badge plain">Confidence assessment</span></div>
+        </article>
+
+        <article class="part glass" id="summary">
+          <span class="eyebrow">01 · Executive summary</span>
+          <h2>The panel agrees on a preferred first-line therapy</h2>
+          <div class="in-short glass strong" style="margin-bottom:16px"><span class="ico sm" data-ico="spark"></span><div><b>In short</b><p>A third-generation EGFR TKI is the preferred first-line therapy. The PD-L1 result does not change that, because of the driver mutation.</p></div></div>
+          <p class="muted">For a treatment-naïve EGFR exon 19-deletion metastatic NSCLC, the council converges on a third-generation EGFR TKI as preferred first-line therapy, with the PD-L1 result not redirecting to front-line immunotherapy given the driver mutation. Two dissenting considerations, CNS surveillance cadence and the role of upfront local therapy for oligometastatic disease, are carried forward with explicit evidence.</p>
+        </article>
+
+        <article class="part glass" id="evidence">
+          <span class="eyebrow">02 · Evidence synthesis</span>
+          <h2>What the evidence says</h2>
+          <div class="ev">
+            <div><span class="badge">Pivotal RCT</span><p>In the referenced phase III trial, a third-generation EGFR TKI improved progression-free survival versus a first-generation TKI in EGFR-mutated advanced NSCLC, with favorable CNS activity. <span class="tiny">Synthetic citation for demonstration.</span></p></div>
+            <div><span class="badge">Guideline</span><p>National guidelines recommend EGFR-directed therapy over immunotherapy alone when a sensitizing EGFR alteration is present, whatever the PD-L1 level. <span class="tiny">Synthetic citation for demonstration.</span></p></div>
+          </div>
+        </article>
+
+        <article class="part glass" id="deliberation">
+          <span class="eyebrow">03 · Multidisciplinary deliberation</span>
+          <h2>How the specialists reached consensus</h2>
+          <p class="muted">Each specialist's position, the points of disagreement and how they were resolved, in full.</p>
+          <div class="locked" style="margin-top:16px"><span class="ico sm" data-ico="lock"></span>The full deliberation transcript is included in the complete report.</div>
+        </article>
+
+        <article class="part glass" id="redteam">
+          <span class="eyebrow">04 · Red-team challenge</span>
+          <h2>We tried to break the recommendation</h2>
+          <div class="challenge">
+            <div class="q"><b>Challenge</b><p>Does PD-L1 TPS 40% justify adding immunotherapy front-line?</p></div>
+            <div class="a"><b>Resolution</b><p>The consensus holds. In EGFR-driven disease, front-line immunotherapy isn't supported and may raise toxicity risk near TKIs. Recommendation unchanged; reasoning documented.</p></div>
+          </div>
+        </article>
+
+        <article class="part glass" id="trials">
+          <span class="eyebrow">05 · Clinical trial matching</span>
+          <h2>Trials worth discussing</h2>
+          <div class="locked"><span class="ico sm" data-ico="lock"></span>Matched trials, with eligibility notes, are included in the complete report.</div>
+        </article>
+
+        <article class="part glass bloom" id="confidence">
+          <span class="eyebrow">06 · Confidence &amp; uncertainty</span>
+          <h2>How sure we are, and why</h2>
+          <div class="conf">
+            <div class="ring" role="img" aria-label="Confidence: high"><span>High</span></div>
+            <div class="stack"><p><b style="color:var(--ink)">Strong, guideline-concordant evidence for the first-line choice.</b></p><p class="muted">Still uncertain: the best CNS imaging interval, and local therapy for oligometastatic disease. Both are flagged for the treating team.</p></div>
+          </div>
+        </article>
+
+        <div class="statement glass bloom"><p class="big" style="font-size:clamp(22px,2.6vw,30px)">The full report adds the complete evidence library, deliberation transcript, guideline scorecard and audit trail.</p><div style="margin-top:22px"><a class="btn primary inline" href="request.html">Start a similar request <span class="arrow">→</span></a></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // highlight the section you're reading in the contents list
+  const links = [...document.querySelectorAll('.toc a')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('.part').forEach((p) => io.observe(p));
+</script>
+</body>
+</html>

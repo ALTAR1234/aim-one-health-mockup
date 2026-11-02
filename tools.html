@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our tools · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+<style>
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .jump .chip { padding-left: 6px; min-height: 46px; color: var(--ink); }
+  .jump .ico.sm { width: 34px; height: 34px; border-radius: 50%; }
+  .jump .ico.sm svg { width: 17px; height: 17px; }
+  .tool-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  .tool-row.flip > :first-child { order: 2; }
+  .tool-row h2 { margin: 14px 0 16px; }
+  .panel { padding: 26px; border-radius: 30px; }
+  /* navigator chat preview */
+  .msg { max-width: 88%; padding: 13px 16px; border-radius: 18px; font-size: 15.5px; line-height: 1.5; }
+  .msg + .msg { margin-top: 10px; }
+  .msg.them { background: var(--glass-strong); box-shadow: inset 0 0 0 1px var(--glass-edge-2); border-bottom-left-radius: 6px; color: var(--ink); }
+  .msg.me { margin-left: auto; color: #fff; background: linear-gradient(135deg, #0b2e59, #0a6f79); border-bottom-right-radius: 6px; }
+  :root[data-theme='night'] .msg.me { color: #03141c; background: linear-gradient(135deg, #7ef0e2, #8db4ff); }
+  .who { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid rgb(13 40 70 / .08); }
+  :root[data-theme='night'] .who { border-bottom-color: rgb(255 255 255 / .08); }
+  .who b { display: block; font-size: 16px; color: var(--ink); }
+  .who small { font-size: 13.5px; color: var(--ok); font-weight: 600; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 800 16px/1 var(--font-head); color: #fff; background: linear-gradient(135deg, #19b3b0, #3b7cf0); }
+  .todo { margin-top: 16px; display: grid; gap: 8px; }
+  .todo div { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 12px; font-size: 15px; font-weight: 600; color: var(--ink-2); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .todo div::before { content: ''; flex: none; width: 18px; height: 18px; border-radius: 6px; box-shadow: inset 0 0 0 2px var(--accent); }
+  /* report contents */
+  .toc { display: grid; gap: 8px; margin-top: 18px; }
+  .toc a { display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 14px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: 16px; background: var(--glass-strong); box-shadow: inset 0 0 0 1px var(--glass-edge-2); transition: transform .2s; }
+  .toc a:hover { transform: translateX(4px); }
+  .toc a span { font: 800 13px/1 var(--font-head); color: var(--accent); width: 22px; }
+  /* detailed stages */
+  .stage-card { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding: 26px; border-radius: 24px; }
+  .stage-card .n { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font: 800 20px/1 var(--font-head); color: #fff; background: linear-gradient(135deg, #19b3b0, #3b7cf0); box-shadow: 0 8px 20px rgb(30 140 200 / .3); }
+  .stage-card.final .n { background: linear-gradient(135deg, #0b2e59, #0a6f79); }
+  .stage-card h3 { margin-bottom: 6px; }
+  .stage-card p { color: var(--ink-2); font-size: 16.5px; }
+  .stage-card .out { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+  /* learning loop */
+  .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .loop .tile { position: relative; }
+  .loop .tile:not(:last-child)::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--accent); z-index: 2; }
+  /* faq */
+  details { border-radius: 18px; padding: 0 24px; }
+  details + details { margin-top: 12px; }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; font: 700 18px/1.35 var(--font-head); color: var(--brand); }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); transition: transform .3s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding-bottom: 22px; color: var(--ink-2); }
+  @media (max-width: 980px) {
+    .tool-row { grid-template-columns: 1fr; }
+    .tool-row.flip > :first-child { order: 0; }
+    .loop { grid-template-columns: 1fr 1fr; }
+    .loop .tile::after { display: none; }
+  }
+  @media (max-width: 640px) { .loop { grid-template-columns: 1fr; } .stage-card { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="tools.html">
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><span>Our tools</span></nav>
+      <h1>Two tools. One patient at the center.</h1>
+      <p class="lead read">A specialty nurse who helps you through the system, and a research document that explains your options with the evidence behind them. Together they take a case from the evidence to a decision you understand.</p>
+      <div class="jump">
+        <a class="chip" href="#navigator"><span class="ico sm" data-ico="stethoscope"></span>Care Navigator</a>
+        <a class="chip" href="#document"><span class="ico sm" data-ico="doc"></span>Care Pathway Document</a>
+        <a class="chip" href="#how"><span class="ico sm" data-ico="shield"></span>How a recommendation is built</a>
+        <a class="chip" href="#faq"><span class="ico sm" data-ico="chat"></span>Questions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARE NAVIGATOR -->
+  <section id="navigator" style="padding-top:0">
+    <div class="wrap tool-row">
+      <div class="reveal">
+        <span class="eyebrow">Patient navigation</span>
+        <h2>Care Navigator</h2>
+        <p class="lead">Specialty nurses review your case and support you when you need it. Questions get answered, next steps get planned, and your care stays coordinated.</p>
+        <ul class="checks" style="margin-top:24px">
+          <li><span><b style="color:var(--ink)">Nurse-led and matched to your condition.</b> A specialist nurse, not a call center.</span></li>
+          <li><span><b style="color:var(--ink)">Know what's next.</b> What to ask, what to prepare, and what comes after.</span></li>
+          <li><span><b style="color:var(--ink)">For patients and care teams.</b> Use it directly, or alongside your doctors.</span></li>
+        </ul>
+        <div style="margin-top:28px"><a class="btn primary inline" href="navigator.html">Open the Navigator <span class="arrow">→</span></a></div>
+      </div>
+      <div class="panel glass bloom reveal" aria-label="Example conversation with a nurse navigator">
+        <div class="who"><span class="avatar">RN</span><div><b>Your oncology nurse navigator</b><small>● Reviewing your case</small></div></div>
+        <div class="msg them">I've read your pathology report. Before Thursday's appointment, it would help to ask whether biomarker testing has been ordered.</div>
+        <div class="msg me">What should I bring with me?</div>
+        <div class="msg them">Here's a short list. I've also added the questions we talked about.</div>
+        <div class="todo"><div>Recent scan reports (CT, PET)</div><div>Your medication list</div><div>Three questions for your oncologist</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARE PATHWAY DOCUMENT -->
+  <section id="document" style="padding-top:0">
+    <div class="wrap tool-row flip">
+      <div class="reveal">
+        <span class="eyebrow">The deliverable · Oncology first</span>
+        <h2>Care Pathway Research Document</h2>
+        <p class="lead">One document you and your care team can actually use. It carries the summary, the evidence behind it, the alternatives that were considered, and reasoning you can challenge.</p>
+        <ul class="checks" style="margin-top:24px">
+          <li>Clear reasoning, with a confidence level for each recommendation</li>
+          <li>Alternatives and open questions are included, not hidden</li>
+          <li>Written to be read by patients and clinicians alike</li>
+        </ul>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn primary inline" href="report.html">See a sample report <span class="arrow">→</span></a><a class="btn ghost inline" href="request.html">Request one</a></div>
+      </div>
+      <div class="panel glass bloom reveal">
+        <span class="badge"><span class="dot"></span> What's inside</span>
+        <div class="toc">
+          <a href="report.html#summary"><span>01</span>Executive clinical summary</a>
+          <a href="report.html#evidence"><span>02</span>Evidence synthesis, with citations</a>
+          <a href="report.html#deliberation"><span>03</span>Multidisciplinary deliberation</a>
+          <a href="report.html#redteam"><span>04</span>Red-team challenge</a>
+          <a href="report.html#trials"><span>05</span>Clinical trial matching</a>
+          <a href="report.html#confidence"><span>06</span>Confidence and uncertainty</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT'S BUILT -->
+  <section id="how" style="padding-top:0">
+    <div class="narrow">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How a recommendation is built</span>
+        <h2>Five stages before anything reaches you</h2>
+        <p class="lead">Most AI tools give an answer and stop. Every Care Pathway survives expert debate and an independent challenge first.</p>
+      </div>
+      <div class="grid">
+        <article class="stage-card glass reveal"><span class="n">1</span><div><h3>Virtual specialist board</h3><p>AI specialists from every relevant field review the case on their own, so no single view dominates.</p><div class="out"><span class="badge plain">Independent reviews</span></div></div></article>
+        <article class="stage-card glass reveal"><span class="n">2</span><div><h3>Multidisciplinary deliberation</h3><p>The specialists challenge competing ideas, weigh the evidence and work toward consensus. Disagreements are written down, not erased.</p><div class="out"><span class="badge plain">Consensus</span><span class="badge warm">Dissents recorded</span></div></div></article>
+        <article class="stage-card glass reveal"><span class="n">3</span><div><h3>Independent red-team validation</h3><p>A separate reviewer tries to break the recommendation: it explores other diagnoses and treatments, and names the evidence that's missing.</p><div class="out"><span class="badge plain">Stress-tested</span></div></div></article>
+        <article class="stage-card glass reveal"><span class="n">4</span><div><h3>Evidence-based care pathway</h3><p>Every recommendation comes with clear reasoning, supporting evidence, the alternatives considered and a confidence level.</p><div class="out"><span class="badge ok">Confidence levels</span></div></div></article>
+        <article class="stage-card final glass bloom reveal"><span class="n">5</span><div><h3>Your physician makes the final decision</h3><p>AI supports clinical judgment. It does not replace it.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING LOOP -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Machine teaching</span>
+        <h2>Every case makes the next one better</h2>
+        <p class="lead read">Every case reviewed, every clinician correction and every patient outcome feeds back in. The next patient starts further along than the last.</p>
+      </div>
+      <div class="loop">
+        <div class="tile glass reveal"><span class="ico" data-ico="layers"></span><h3>Case reviewed</h3><p>The panel works through a real case.</p></div>
+        <div class="tile glass reveal"><span class="ico" data-ico="stethoscope"></span><h3>Clinicians correct</h3><p>Their feedback teaches the system.</p></div>
+        <div class="tile glass reveal"><span class="ico" data-ico="pulse"></span><h3>Outcomes measured</h3><p>What actually happened is recorded.</p></div>
+        <div class="tile glass bloom reveal"><span class="ico" data-ico="loop"></span><h3>The system learns</h3><p>The next patient benefits.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:0">
+    <div class="narrow">
+      <div class="sec-head reveal"><span class="eyebrow">Questions</span><h2>Good to know</h2></div>
+      <details class="glass reveal" open><summary>Does AI make the decision about my care?</summary><p>No. AI helps your care team see the evidence and the options. Your treating physician always makes the final clinical decision.</p></details>
+      <details class="glass reveal"><summary>Which conditions do you cover?</summary><p>Oncology is our first specialty. Additional specialties are coming soon.</p></details>
+      <details class="glass reveal"><summary>What does it cost?</summary><p>The Care Pathway Research Document has a standard value of $300. During early access it's free for the first 50 eligible patients.</p></details>
+      <details class="glass reveal"><summary>Can I see an example first?</summary><p>Yes. Our <a href="report.html">sample report</a> uses a synthetic case, so you can see exactly what you'd receive.</p></details>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap"><div class="statement glass bloom reveal"><p class="big">Ready to see your options <span class="grad">clearly</span>?</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px"><a class="btn primary" href="request.html">Request a Care Pathway <span class="arrow">→</span></a><a class="btn ghost" href="report.html">See a sample report</a></div></div></div>
+  </section>
+</main>
+<script src="site.js"></script>
+</body>
+</html>

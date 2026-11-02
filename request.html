@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a Care Pathway · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+<style>
+  .who-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 30px; max-width: 860px; }
+  .who-pick button { display: flex; gap: 16px; align-items: flex-start; padding: 22px; border-radius: 24px; text-align: left; border: 0; cursor: pointer; font: inherit; color: inherit; }
+  .who-pick button b { display: block; font: 700 19px/1.3 var(--font-head); color: var(--brand); }
+  .who-pick button span.t { font-size: 15.5px; color: var(--ink-2); }
+  .who-pick button.on { box-shadow: var(--shadow), inset 0 0 0 2px var(--accent); }
+  .flow { display: none; }
+  .flow.on { display: block; }
+  .two { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: start; }
+  .side { padding: clamp(26px, 3vw, 38px); border-radius: 30px; color: #e8f4ff; background: linear-gradient(160deg, rgb(11 46 89 / .92), rgb(6 24 47 / .92)); box-shadow: var(--shadow-lift); position: relative; overflow: hidden; }
+  .side::after { content: ''; position: absolute; right: -80px; bottom: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgb(25 179 176 / .45), transparent 70%); }
+  .side h2 { color: #fff; font-size: clamp(26px, 2.8vw, 34px); margin: 14px 0 14px; }
+  .side p { color: #c6d8ea; }
+  .side .eyebrow { color: #7ef0e2; }
+  .side .checks li { color: #dbe9f6; }
+  .side .trust { margin-top: 24px; }
+  .side .badge.plain { color: #cfe3f5; background: rgb(255 255 255 / .1); }
+  .form { padding: clamp(26px, 3vw, 38px); border-radius: 30px; display: grid; gap: 18px; }
+  .stepper { display: flex; gap: 8px; align-items: center; font: 700 13px/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .stepper i { width: 34px; height: 6px; border-radius: 6px; background: rgb(13 40 70 / .1); }
+  .stepper i.on { background: var(--thread-x); }
+  :root[data-theme='night'] .stepper i { background: rgb(255 255 255 / .12); }
+  .form h2 { font-size: clamp(26px, 2.6vw, 32px); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .consent { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--ink-2); }
+  .consent input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); flex: none; }
+  .code { display: flex; gap: 10px; }
+  .code input { width: 54px; height: 62px; text-align: center; font: 800 24px/1 var(--font-head); border-radius: 14px; border: 0; color: var(--ink); background: var(--glass-strong); box-shadow: inset 0 0 0 1.5px var(--glass-edge-2); outline: 0; }
+  .code input:focus { box-shadow: inset 0 0 0 2px var(--accent), 0 0 0 5px color-mix(in srgb, var(--accent) 16%, transparent); }
+  .done { text-align: center; display: grid; gap: 14px; justify-items: center; padding: 20px 0; }
+  .done .big-ok { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #19b3b0, #3b7cf0); box-shadow: 0 12px 30px rgb(30 140 200 / .35); }
+  .done .big-ok svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 3; }
+  /* patient browser (after clinician sign-in) */
+  .browser-head { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+  .browser-tools { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; margin-bottom: 16px; }
+  .browser-tools .input { min-width: 0; }
+  .table-wrap { border-radius: 24px; overflow-x: auto; padding: 6px; }
+  .st { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; }
+  .st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .st.ready { color: var(--ok); } .st.review { color: var(--accent-2); } .st.gen { color: var(--accent); } .st.sub { color: var(--warm); } .st.draft { color: var(--ink-3); }
+  @media (max-width: 980px) { .two, .who-pick { grid-template-columns: 1fr; } .browser-tools { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .row2 { grid-template-columns: 1fr; } .code input { width: 44px; height: 54px; } }
+</style>
+</head>
+<body data-page="request.html">
+<main id="main">
+  <section class="page-hero" style="padding-bottom:32px">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><span>Request a Care Pathway</span></nav>
+      <h1>Request a Care Pathway</h1>
+      <p class="lead read">Tell us who you are and we'll take you to the right place. Oncology cases only, for now.</p>
+      <div class="who-pick" role="tablist">
+        <button class="glass lift on" data-flow="patient" role="tab" aria-selected="true"><span class="ico" data-ico="heart"></span><span><b>I'm a patient or family member</b><span class="t">Request a Care Pathway document for your own case.</span></span></button>
+        <button class="glass lift" data-flow="clinician" role="tab" aria-selected="false"><span class="ico" data-ico="stethoscope"></span><span><b>I'm a clinician or researcher</b><span class="t">Work with synthetic patients and research packages.</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <!-- PATIENT FLOW (suggested: the current site has no patient intake) -->
+      <div class="flow on" id="flow-patient">
+        <div class="two">
+          <aside class="side">
+            <span class="eyebrow">Early access</span>
+            <h2>Free for the first 50 eligible patients</h2>
+            <p>The Care Pathway Research Document normally has a standard value of $300. During early access, it's free.</p>
+            <ul class="checks" style="margin-top:22px"><li>Reviewed by a virtual board of specialists</li><li>Challenged by an independent red team</li><li>Written so you and your doctors can both use it</li><li>Your physician always makes the final decision</li></ul>
+            <div class="trust"><span class="badge plain">ISO 27001</span><span class="badge plain">FedRAMP High</span></div>
+          </aside>
+          <form class="form glass strong" id="pform" novalidate>
+            <div class="stepper"><i class="on"></i><i></i><span>Step 1 of 2 · About you</span></div>
+            <h2>Let's start with the basics</h2>
+            <p class="muted small">A care navigator will contact you to collect medical records securely. Please don't include medical details here.</p>
+            <div class="row2">
+              <div class="field"><label for="fn">First name</label><input class="input" id="fn" autocomplete="given-name" required></div>
+              <div class="field"><label for="ln">Last name</label><input class="input" id="ln" autocomplete="family-name" required></div>
+            </div>
+            <div class="field"><label for="pe">Email</label><input class="input" id="pe" type="email" autocomplete="email" required></div>
+            <div class="row2">
+              <div class="field"><label for="rel">I am</label><select class="input" id="rel"><option>The patient</option><option>A family member</option><option>A caregiver</option></select></div>
+              <div class="field"><label for="ct">Cancer type</label><select class="input" id="ct"><option>Choose one</option><option>Breast</option><option>Lung</option><option>Colorectal</option><option>Blood cancer / lymphoma</option><option>Prostate</option><option>Other / not sure</option></select></div>
+            </div>
+            <label class="consent"><input type="checkbox" required> <span>I agree to be contacted about my request, and I understand this is not emergency or medical advice.</span></label>
+            <button class="btn primary" type="submit">Continue <span class="arrow">→</span></button>
+            <p class="tiny">Prefer email? Write to <a href="mailto:info@aimonehealth.com">info@aimonehealth.com</a>.</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- CLINICIAN FLOW (mirrors the site's two-step passcode sign-in) -->
+      <div class="flow" id="flow-clinician">
+        <div class="two" id="signin">
+          <aside class="side">
+            <span class="eyebrow">Clinical &amp; research access</span>
+            <h2>For clinicians, researchers and care teams. Synthetic patients, no PHI.</h2>
+            <p>Whether you practise, investigate or coordinate care, work with realistic patient records that carry no real patient data. Browse generated records, assemble packages, and create new synthetic subjects for your studies or case preparation.</p>
+            <div class="trust"><span class="badge plain">FedRAMP High</span><span class="badge plain">Azure Gov</span><span class="badge plain">Zero PHI</span><span class="badge plain">ISO 27001</span></div>
+          </aside>
+          <div class="form glass strong" id="cform">
+            <div class="stepper"><i class="on"></i><i></i><span>Step 1 of 2 · Sign in</span></div>
+            <h2>Clinician &amp; researcher access</h2>
+            <p class="muted small">Enter your work or institutional email and we'll send a one-time passcode to confirm it's you.</p>
+            <div class="field"><label for="ce">Work or institutional email</label><input class="input" id="ce" type="email" placeholder="you@organization.org" autocomplete="email"></div>
+            <button class="btn primary" id="send">Send passcode <span class="arrow">→</span></button>
+          </div>
+        </div>
+
+        <div id="browser" hidden>
+          <div class="browser-head">
+            <div><span class="eyebrow">Patient browser</span><h2 style="margin-top:10px">Synthetic patients</h2><p class="muted">Browse synthetic patients and open their research packages.</p></div>
+            <button class="btn primary inline"><span>＋</span> Create synthetic patient</button>
+          </div>
+          <div class="browser-tools glass strong" style="padding:14px;border-radius:24px">
+            <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input class="input" id="pq" placeholder="Search patients" aria-label="Search patients"></label>
+            <select class="input" id="pc" aria-label="Category"><option>All categories</option><option>Oncology</option><option>Neurology</option><option>Cardiology</option><option>Immunology</option><option>Rare Disease</option><option>Control Cohort</option></select>
+            <select class="input" id="ps" aria-label="Status"><option>All statuses</option><option>Submitted</option><option>Ready</option><option>In Review</option><option>Generating</option><option>Draft</option><option>Archived</option></select>
+          </div>
+          <div class="table-wrap glass">
+            <table class="table"><thead><tr><th>Patient</th><th>Category</th><th>Status</th><th>Created</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+          </div>
+          <p class="tiny" style="margin-top:12px">Example rows for the mockup. All patients here are synthetic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // choose who you are
+  document.querySelectorAll('.who-pick button').forEach((b) => (b.onclick = () => {
+    document.querySelectorAll('.who-pick button').forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', String(x === b)); });
+    document.querySelectorAll('.flow').forEach((f) => f.classList.toggle('on', f.id === 'flow-' + b.dataset.flow));
+  }));
+  const tick = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+  // patient request (mockup: nothing is sent anywhere)
+  document.getElementById('pform').onsubmit = (e) => {
+    e.preventDefault();
+    const f = e.target;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    f.innerHTML = `<div class="stepper"><i class="on"></i><i class="on"></i><span>Step 2 of 2 · Done</span></div><div class="done"><span class="big-ok">${tick}</span><h2>Thank you, ${document.getElementById('fn').value.replace(/[<>&]/g, '')}</h2><p class="muted read">A care navigator will email you to collect your records securely and confirm your early-access place.</p><a class="btn ghost inline" href="report.html">While you wait, see a sample report</a></div>`;
+  };
+  // clinician sign-in: email, then a 6-digit passcode, then the patient browser
+  const cform = document.getElementById('cform');
+  document.getElementById('send').onclick = () => {
+    const email = document.getElementById('ce').value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { document.getElementById('ce').focus(); return; }
+    cform.innerHTML = `<div class="stepper"><i class="on"></i><i class="on"></i><span>Step 2 of 2 · Verify</span></div>
+      <h2>Check your email</h2><p class="muted small">We sent a 6-digit passcode to <b style="color:var(--ink)">${email.replace(/[<>&]/g, '')}</b>. For this mockup, any 6 digits work.</p>
+      <div class="code">${'<input inputmode="numeric" maxlength="1" aria-label="Digit">'.repeat(6)}</div>
+      <button class="btn primary" id="verify">Verify and continue <span class="arrow">→</span></button>
+      <button class="btn ghost" id="back">Use a different email</button>`;
+    const boxes = [...cform.querySelectorAll('.code input')];
+    boxes[0].focus();
+    boxes.forEach((b, i) => {
+      b.oninput = () => { b.value = b.value.replace(/\D/g, ''); if (b.value && boxes[i + 1]) boxes[i + 1].focus(); };
+      b.onkeydown = (e) => { if (e.key === 'Backspace' && !b.value && boxes[i - 1]) boxes[i - 1].focus(); };
+    });
+    document.getElementById('verify').onclick = () => {
+      if (boxes.some((b) => !b.value)) { boxes.find((b) => !b.value).focus(); return; }
+      document.getElementById('signin').hidden = true;
+      document.getElementById('browser').hidden = false;
+      document.querySelector('.who-pick').hidden = true;
+    };
+    document.getElementById('back').onclick = () => location.reload();
+  };
+  // example synthetic patients for the browser
+  const ROWS = [
+    ['SP-1042 · NSCLC, EGFR ex19del', 'Oncology', 'ready', 'Ready', 'Oct 28, 2026'],
+    ['SP-1041 · Glioblastoma, IDH-wt', 'Oncology', 'review', 'In Review', 'Oct 27, 2026'],
+    ['SP-1039 · Relapsing MS', 'Neurology', 'gen', 'Generating', 'Oct 26, 2026'],
+    ['SP-1036 · HFrEF, NYHA III', 'Cardiology', 'sub', 'Submitted', 'Oct 24, 2026'],
+    ['SP-1033 · Lupus nephritis', 'Immunology', 'draft', 'Draft', 'Oct 22, 2026'],
+    ['SP-1030 · CMML, post-HMA', 'Oncology', 'ready', 'Ready', 'Oct 19, 2026'],
+    ['SP-1027 · Duchenne MD', 'Rare Disease', 'review', 'In Review', 'Oct 15, 2026'],
+  ];
+  const drawRows = () => {
+    const q = document.getElementById('pq').value.toLowerCase(), c = document.getElementById('pc').value, s = document.getElementById('ps').value;
+    const list = ROWS.filter((r) => (!q || r[0].toLowerCase().includes(q)) && (c === 'All categories' || r[1] === c) && (s === 'All statuses' || r[3] === s));
+    document.getElementById('rows').innerHTML = list.length ? list.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td><span class="st ${r[2]}">${r[3]}</span></td><td>${r[4]}</td><td><a href="report.html">Open →</a></td></tr>`).join('') : '<tr><td colspan="5" style="text-align:center;font-weight:500;color:var(--ink-2)">No patients match these filters.</td></tr>';
+  };
+  ['pq', 'pc', 'ps'].forEach((id) => (document.getElementById(id).oninput = drawRows));
+  drawRows();
+</script>
+</body>
+</html>

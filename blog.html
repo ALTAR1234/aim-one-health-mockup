@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · AiM One Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="flip.js"></script>
+<style>
+  .post { display: flex; flex-direction: column; border-radius: 26px; overflow: hidden; text-decoration: none; color: inherit; }
+  .cover { position: relative; aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; background: linear-gradient(145deg, var(--c1), var(--c2)); }
+  .cover::before { content: ''; position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; left: -10%; top: -30%; background: rgb(255 255 255 / .22); filter: blur(30px); }
+  .cover::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgb(255 255 255 / .18) 1px, transparent 1px); background-size: 18px 18px; mask: linear-gradient(135deg, #000, transparent 70%); }
+  .cover .ico { position: relative; z-index: 1; width: 72px; height: 72px; border-radius: 22px; color: #fff; background: rgb(255 255 255 / .18); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 0 0 1px rgb(255 255 255 / .3); }
+  .cover .ico svg { width: 34px; height: 34px; }
+  .post .body { padding: 24px 26px 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .post .cat { font: 700 12.5px/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .post h3 { font-size: 21px; line-height: 1.3; }
+  .post p { color: var(--ink-2); font-size: 16px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .post .by { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--ink-3); font-weight: 600; }
+  .post:hover h3 { color: var(--accent); }
+  .featured { display: grid; grid-template-columns: 1.15fr 1fr; }
+  .featured .cover { aspect-ratio: auto; min-height: 340px; }
+  .featured .body { padding: clamp(26px, 3.4vw, 44px); justify-content: center; }
+  .featured h3 { font-size: clamp(26px, 2.6vw, 34px); }
+  .featured p { -webkit-line-clamp: 4; font-size: 17.5px; }
+  .subscribe { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: clamp(28px, 4vw, 44px); border-radius: 32px; }
+  .subscribe form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .subscribe .input { min-width: 0; flex: 1 1 220px; border-radius: 999px; }
+  .subscribe > * { min-width: 0; }
+  @media (max-width: 980px) { .featured, .subscribe { grid-template-columns: 1fr; } .featured .cover { min-height: 220px; } }
+</style>
+</head>
+<body data-page="blog.html">
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><span>Blog</span></nav>
+      <h1>Field notes</h1>
+      <p class="lead read">Case studies, research and the design decisions we wrestled with, on earlier, more collaborative cancer care.</p>
+      <div class="chips" id="cats" style="margin-top:28px"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div id="feature"></div>
+      <div class="grid g3" id="posts" style="margin-top:22px"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="subscribe glass bloom reveal">
+        <div><span class="eyebrow">Stay in the loop</span><h2 style="font-size:clamp(26px,3vw,36px);margin:12px 0 10px">Want these in your inbox?</h2><p class="muted read">We publish when we have something worth saying, usually a deployment story or a design decision. No fixed schedule, no filler.</p></div>
+        <form onsubmit="event.preventDefault(); this.innerHTML='<span class=&quot;badge ok&quot;><span class=&quot;dot&quot;></span> Thanks, you&rsquo;re on the list (mockup)</span>'"><label class="sr" for="em" style="position:absolute;left:-999px">Email</label><input class="input" id="em" type="email" required placeholder="you@example.com"><button class="btn primary inline">Subscribe</button></form>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="site.js"></script>
+<script>
+  // Posts as listed on aimonehealth.com/blogs.html
+  const POSTS = [
+    { cat: 'Clinical Research', tags: ['Clinical Research', 'Early Diagnosis & Screening', 'Multidisciplinary Care'], title: 'Diagnosing a Hidden Leukemia in the Emergency Department', text: 'A grounded multi-agent AI reasoning study: following a synthetic acute promyelocytic leukemia case from ED triage through empiric ATRA and arsenic trioxide to molecular remission, with every recommendation auditable.', by: 'AiM One Health Clinical Research', date: 'Jul 6, 2026', min: 15, ico: 'flask', c: ['#0b2e59', '#0a6f79'] },
+    { cat: 'Treatment Planning', tags: ['Treatment Planning', 'Precision Oncology', 'Multidisciplinary Care'], title: 'From Molecular Evidence to Multidisciplinary Decision Support', text: 'A synthetic third-line colorectal cancer case study: how the hard work between a molecular report and a patient’s next step can be done reliably and traceably.', by: 'AiM One Health', date: 'Jul 6, 2026', min: 14, ico: 'dna', c: ['#2563c9', '#19b3b0'] },
+    { cat: 'Rare Disease Innovation', tags: ['Rare Disease Innovation', 'Precision Oncology', 'Treatment Planning', 'Multidisciplinary Care'], title: 'Building a Virtual Cell to Rank Gene-Therapy Strategies, Before the Lab', text: 'A lighthouse case: grounding a variant, simulating every rescue strategy, iterating to convergence, and naming the one measurement that earns confidence in the answer.', by: 'AiM One Health Science Team', date: 'Jul 6, 2026', min: 12, ico: 'brain', c: ['#6a4fd0', '#c2417f'] },
+    { cat: 'Patient-Centered Care', tags: ['Patient-Centered Care', 'Multidisciplinary Care', 'Early Diagnosis & Screening'], title: 'Why Earlier Multidisciplinary Review Matters', text: 'Helping patients reach the right treatment sooner: why bringing several clinical perspectives together before critical decisions reduces delays and uncertainty.', by: 'Multidisciplinary.ai', date: 'Jun 11, 2026', min: 5, ico: 'heart', c: ['#c2562b', '#e0a13a'] },
+    { cat: 'Care Coordination', tags: ['Care Coordination', 'Multidisciplinary Care', 'Patient-Centered Care', 'Treatment Planning'], title: 'From Sequential Referrals to Multidisciplinary Deliberation', text: 'How bringing clinical perspectives together earlier can reduce delays, improve coordination and help patients reach informed treatment decisions sooner.', by: 'Multidisciplinary.ai', date: 'Jun 11, 2026', min: 7, ico: 'users', c: ['#0e7a4f', '#19b3b0'] },
+    { cat: 'Early Diagnosis', tags: ['Early Diagnosis & Screening', 'Multidisciplinary Care', 'Treatment Planning'], title: 'How Multidisciplinary Deliberation Can Reduce Diagnostic Delays', text: 'The challenge isn’t finding specialists. It’s bringing the right expertise together early to spot critical information needs and cut diagnostic delays.', by: 'Multidisciplinary.ai', date: 'Jun 11, 2026', min: 6, ico: 'clock', c: ['#3f4fc7', '#8db4ff'] },
+  ];
+  const CATS = ['All', 'Patient-Centered Care', 'Multidisciplinary Care', 'Care Coordination', 'Early Diagnosis & Screening', 'Treatment Planning', 'Rare Disease Innovation', 'Precision Oncology', 'Clinical Research'];
+  let cat = 'All';
+  const card = (p, featured) => `<a class="post glass lift sheen${featured ? ' featured' : ''}" href="#">
+      <div class="cover" style="--c1:${p.c[0]};--c2:${p.c[1]}"><span class="ico">${aimIcon(p.ico)}</span></div>
+      <div class="body"><span class="cat">${p.cat}</span><h3>${p.title}</h3><p>${p.text}</p><div class="by"><span>${p.by}</span><span>${p.date}</span><span>${p.min} min read</span></div></div></a>`;
+  const draw = () => {
+    const list = POSTS.filter((p) => cat === 'All' || p.tags.includes(cat));
+    document.getElementById('feature').innerHTML = list[0] ? card(list[0], true) : '<div class="glass pad center muted">No posts in this topic yet.</div>';
+    document.getElementById('posts').innerHTML = list.slice(1).map((p) => card(p)).join('');
+    document.querySelectorAll('.post.sheen').forEach((el) => el.insertAdjacentHTML('afterbegin', '<span class="sweep" aria-hidden="true"></span>'));
+  };
+  const chips = document.getElementById('cats');
+  chips.innerHTML = CATS.map((c) => `<button class="chip${c === 'All' ? ' on' : ''}" data-c="${c}">${c} <span class="n">${c === 'All' ? POSTS.length : POSTS.filter((p) => p.tags.includes(c)).length}</span></button>`).join('');
+  chips.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; chips.querySelectorAll('.chip').forEach((x) => x.classList.toggle('on', x === b)); draw(); };
+  draw();
+</script>
+</body>
+</html>
